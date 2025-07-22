@@ -3,6 +3,7 @@ import 'theme.dart';
 import 'crop_service.dart';
 import 'api_service.dart';
 import 'package:image_picker/image_picker.dart';
+import 'disease_detection_page.dart';
 
 void main() {
   runApp(const SahayakApp());
@@ -35,7 +36,7 @@ class _MainTabScaffoldState extends State<MainTabScaffold> {
   static final List<Widget> _tabs = <Widget>[
     const HomeTab(),
     const MyCropsTab(),
-    Center(child: Text('Disease (Coming Soon)')),
+    const DiseaseDetectionPage(),
     Center(child: Text('Market (Coming Soon)')),
     Center(child: Text('Schemes (Coming Soon)')),
   ];
