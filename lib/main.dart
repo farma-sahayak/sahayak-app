@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile/features/crops/bloc/crops_bloc.dart';
+import 'package:mobile/features/crops/pages/my_crops_page.dart';
+import 'package:mobile/features/crops/repository/crops_repository.dart';
 import 'theme.dart';
 import 'crop_service.dart';
 import 'api_service.dart';
@@ -8,6 +11,10 @@ import 'disease_detection_page.dart';
 import 'schemes_page.dart';
 import 'features/market/market.dart';
 import 'features/home/home.dart';
+import 'features/crops/crops.dart' as crops;
+import 'shared/constants/app_constants.dart';
+import 'shared/widgets/app_header.dart';
+import 'shared/widgets/app_card.dart';
 
 void main() {
   runApp(const SahayakApp());
@@ -21,14 +28,18 @@ class SahayakApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => MarketBloc(
-            repository: MarketRepository(),
-          )..add(const LoadMarketPrices()),
+          create: (context) =>
+              MarketBloc(repository: MarketRepository())
+                ..add(const LoadMarketPrices()),
         ),
         BlocProvider(
-          create: (context) => HomeBloc(
-            repository: HomeRepository(),
-          )..add(const LoadHomeData()),
+          create: (context) =>
+              HomeBloc(repository: HomeRepository())..add(const LoadHomeData()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              CropsBloc(repository: CropsRepository())
+                ..add(const crops.LoadCrops()),
         ),
       ],
       child: MaterialApp(
@@ -53,7 +64,7 @@ class _MainTabScaffoldState extends State<MainTabScaffold> {
 
   static final List<Widget> _tabs = <Widget>[
     const HomeTab(),
-    const MyCropsTab(),
+    const MyCropsPage(),
     const DiseaseDetectionPage(),
     const MarketPage(),
     const SchemesPage(),
@@ -116,7 +127,7 @@ class HomeTab extends StatelessWidget {
           },
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            padding: const EdgeInsets.all(AppConstants.screenPadding),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -145,7 +156,10 @@ class HomeTab extends StatelessWidget {
                     IconButton(
                       icon: Stack(
                         children: [
-                          const Icon(Icons.notifications_none, color: Colors.black),
+                          const Icon(
+                            Icons.notifications_none,
+                            color: Colors.black,
+                          ),
                           Positioned(
                             right: 0,
                             child: Container(
@@ -155,10 +169,13 @@ class HomeTab extends StatelessWidget {
                                 shape: BoxShape.circle,
                               ),
                               child: Text(
-                                state is HomeLoaded 
+                                state is HomeLoaded
                                     ? '${state.notifications.where((n) => !n.isRead).length}'
                                     : '3',
-                                style: const TextStyle(color: Colors.white, fontSize: 10),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                ),
                               ),
                             ),
                           ),
@@ -172,43 +189,52 @@ class HomeTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
-                const Text(
+                const SizedBox(height: AppConstants.smallPadding),
+                Text(
                   'Good morning, user! • 12:29 am',
-                  style: TextStyle(color: Colors.black54),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(color: Colors.black54),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppConstants.screenPadding),
                 // Ask Sahayak Anything
-                Card(
+                AppCard(
                   color: const Color(0xFFE8F5E9),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
                   child: ListTile(
+                    contentPadding: EdgeInsets.zero,
                     leading: Container(
                       decoration: const BoxDecoration(
                         color: Color(0xFFB2DFDB),
                         shape: BoxShape.circle,
                       ),
-                      padding: const EdgeInsets.all(8),
-                      child: const Icon(Icons.mic, color: Color(0xFF388E3C)),
+                      padding: const EdgeInsets.all(AppConstants.smallPadding),
+                      child: const Icon(
+                        Icons.mic,
+                        color: Color(0xFF388E3C),
+                        size: AppConstants.iconMedium,
+                      ),
                     ),
-                    title: const Text(
+                    title: Text(
                       'Ask Sahayak Anything',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    subtitle: const Text(
+                    subtitle: Text(
                       'Tap the mic to speak in Kannada or English',
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const ChatScreen()),
+                        MaterialPageRoute(
+                          builder: (context) => const ChatScreen(),
+                        ),
                       );
                     },
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppConstants.screenPadding),
                 // Search bar
                 Container(
                   decoration: BoxDecoration(
@@ -334,7 +360,10 @@ class HomeTab extends StatelessWidget {
                           ),
                           const Spacer(),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(8),
@@ -407,7 +436,10 @@ class HomeTab extends StatelessWidget {
                           ),
                           const Spacer(),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
                             decoration: BoxDecoration(
                               color: const Color(0xFF388E3C).withOpacity(0.1),
                               borderRadius: BorderRadius.circular(8),
@@ -445,7 +477,11 @@ class HomeTab extends StatelessWidget {
                               child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.volume_up, color: Colors.white, size: 16),
+                                  Icon(
+                                    Icons.volume_up,
+                                    color: Colors.white,
+                                    size: 16,
+                                  ),
                                   SizedBox(width: 6),
                                   Text(
                                     'Listen to tip',
@@ -552,12 +588,14 @@ class HomeTab extends StatelessWidget {
           else if (state is HomeLoaded)
             Column(
               children: state.crops
-                  .map((crop) => CropCard(
-                        crop: crop,
-                        onTap: () {
-                          // Navigate to crop details
-                        },
-                      ))
+                  .map(
+                    (crop) => CropCard(
+                      crop: crop,
+                      onTap: () {
+                        // Navigate to crop details
+                      },
+                    ),
+                  )
                   .toList(),
             )
           else if (state is HomeError)
@@ -627,19 +665,21 @@ class HomeTab extends StatelessWidget {
           else if (state is HomeLoaded)
             Column(
               children: state.notifications
-                  .map((notification) => NotificationCard(
-                        notification: notification,
-                        onTap: () {
-                          context.read<HomeBloc>().add(
-                                MarkNotificationAsRead(notification.id),
-                              );
-                        },
-                        onPlayAudio: () {
-                          context.read<HomeBloc>().add(
-                                PlayNotificationAudio(notification.id),
-                              );
-                        },
-                      ))
+                  .map(
+                    (notification) => NotificationCard(
+                      notification: notification,
+                      onTap: () {
+                        context.read<HomeBloc>().add(
+                          MarkNotificationAsRead(notification.id),
+                        );
+                      },
+                      onPlayAudio: () {
+                        context.read<HomeBloc>().add(
+                          PlayNotificationAudio(notification.id),
+                        );
+                      },
+                    ),
+                  )
                   .toList(),
             )
           else if (state is HomeError)
@@ -720,14 +760,15 @@ class HomeTab extends StatelessWidget {
                     },
                   ),
                   const SizedBox(width: 12),
-                                     QuickActionButton(
-                     action: QuickActions.defaultActions[1],
-                     onTap: () {
-                       // Navigate to market tab
-                       final mainTabScaffold = context.findAncestorStateOfType<_MainTabScaffoldState>();
-                       mainTabScaffold?.changeTab(3);
-                     },
-                   ),
+                  QuickActionButton(
+                    action: QuickActions.defaultActions[1],
+                    onTap: () {
+                      // Navigate to market tab
+                      final mainTabScaffold = context
+                          .findAncestorStateOfType<_MainTabScaffoldState>();
+                      mainTabScaffold?.changeTab(3);
+                    },
+                  ),
                 ],
               ),
               const SizedBox(height: 12),
@@ -745,14 +786,15 @@ class HomeTab extends StatelessWidget {
                     },
                   ),
                   const SizedBox(width: 12),
-                                     QuickActionButton(
-                     action: QuickActions.defaultActions[3],
-                     onTap: () {
-                       // Navigate to my crops tab
-                       final mainTabScaffold = context.findAncestorStateOfType<_MainTabScaffoldState>();
-                       mainTabScaffold?.changeTab(1);
-                     },
-                   ),
+                  QuickActionButton(
+                    action: QuickActions.defaultActions[3],
+                    onTap: () {
+                      // Navigate to my crops tab
+                      final mainTabScaffold = context
+                          .findAncestorStateOfType<_MainTabScaffoldState>();
+                      mainTabScaffold?.changeTab(1);
+                    },
+                  ),
                 ],
               ),
             ],
@@ -762,7 +804,13 @@ class HomeTab extends StatelessWidget {
     );
   }
 
-  Widget _buildMarketRow(String emoji, String crop, String price, String change, bool isUp) {
+  Widget _buildMarketRow(
+    String emoji,
+    String crop,
+    String price,
+    String change,
+    bool isUp,
+  ) {
     return Row(
       children: [
         Text(emoji, style: const TextStyle(fontSize: 20)),
@@ -789,7 +837,7 @@ class HomeTab extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
           decoration: BoxDecoration(
-            color: isUp 
+            color: isUp
                 ? Colors.green.withOpacity(0.3)
                 : Colors.red.withOpacity(0.3),
             borderRadius: BorderRadius.circular(4),
@@ -810,330 +858,7 @@ class HomeTab extends StatelessWidget {
 
 // --- My Crops Tab Implementation ---
 
-class MyCropsTab extends StatelessWidget {
-  const MyCropsTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // App bar row
-          Row(
-            children: [
-              const Text(
-                'My Crops',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF388E3C),
-                ),
-              ),
-              const Spacer(),
-              IconButton(
-                icon: const Icon(Icons.add_circle, color: Color(0xFF388E3C)),
-                onPressed: () {},
-                tooltip: 'Add Crop',
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          // Farm Overview Card
-          Card(
-            color: const Color(0xFFE8F5E9),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
-                          'Farm Overview',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF388E3C),
-                          ),
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          '₹28,000',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF388E3C),
-                          ),
-                        ),
-                        Text(
-                          'Total Investment',
-                          style: TextStyle(color: Colors.black54),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(width: 1, height: 48, color: Colors.black12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        SizedBox(height: 8),
-                        Text(
-                          '₹65,000',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFFFFA726),
-                          ),
-                        ),
-                        Text(
-                          'Expected Revenue',
-                          style: TextStyle(color: Colors.black54),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(width: 1, height: 48, color: Colors.black12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        SizedBox(height: 8),
-                        Text(
-                          '₹37,000',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF388E3C),
-                          ),
-                        ),
-                        Text(
-                          'Profit Margin',
-                          style: TextStyle(color: Colors.black54),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          // Crop List
-          const Text(
-            'My Crops',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-          const SizedBox(height: 8),
-          CropListWidget(),
-          const SizedBox(height: 16),
-          // Alerts & Updates
-          const Text(
-            'Alerts & Updates',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-          const SizedBox(height: 8),
-          AlertsWidget(),
-        ],
-      ),
-    );
-  }
-}
-
-class CropListWidget extends StatelessWidget {
-  const CropListWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // Mock data for crops
-    final crops = [
-      {
-        'name': 'Tomato',
-        'health': 80,
-        'status': 'Flowering',
-        'nextAction': 'Apply fertilizer in 2 days',
-        'issues': ['Leaf curl noticed', 'Some pest activity'],
-      },
-      {
-        'name': 'Brinjal',
-        'health': 90,
-        'status': 'Ready for harvest',
-        'nextAction': 'Harvest in 3 days',
-        'issues': <String>[],
-      },
-      {
-        'name': 'Chili',
-        'health': 70,
-        'status': 'Growing',
-        'nextAction': 'Pest check',
-        'issues': ['Some pest activity'],
-      },
-    ];
-    return Column(
-      children: crops.map((crop) {
-        final String name = crop['name'] as String;
-        final int health = crop['health'] as int;
-        final String status = crop['status'] as String;
-        final String nextAction = crop['nextAction'] as String;
-        final List<String> issues = List<String>.from(crop['issues'] as List);
-        return Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          margin: const EdgeInsets.symmetric(vertical: 6),
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.local_florist, color: const Color(0xFF388E3C)),
-                    const SizedBox(width: 8),
-                    Text(
-                      name,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const Spacer(),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFE8F5E9),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        status,
-                        style: const TextStyle(
-                          color: Color(0xFF388E3C),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Expanded(
-                      child: LinearProgressIndicator(
-                        value: health / 100.0,
-                        backgroundColor: Colors.grey[200],
-                        color: health >= 80
-                            ? const Color(0xFF388E3C)
-                            : (health >= 60 ? Colors.orange : Colors.red),
-                        minHeight: 8,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Text(
-                      '$health%',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    const Icon(Icons.event, size: 18, color: Colors.grey),
-                    const SizedBox(width: 4),
-                    Text(
-                      'Next: $nextAction',
-                      style: const TextStyle(color: Colors.black54),
-                    ),
-                  ],
-                ),
-                if (issues.isNotEmpty) ...[
-                  const SizedBox(height: 8),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFF3E0),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Issues:',
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        ...issues
-                            .map(
-                              (issue) => Text(
-                                '- $issue',
-                                style: const TextStyle(color: Colors.red),
-                              ),
-                            )
-                            .toList(),
-                      ],
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-        );
-      }).toList(),
-    );
-  }
-}
-
-class AlertsWidget extends StatelessWidget {
-  const AlertsWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // Mock data for alerts
-    final alerts = [
-      {
-        'msg': 'Tomato plants need fertilizer in 2 days',
-        'color': const Color(0xFFFFF3E0),
-      },
-      {
-        'msg': 'Brinjal harvest is ready in 3 days',
-        'color': const Color(0xFFE8F5E9),
-      },
-      {
-        'msg': 'New government schemes available',
-        'color': const Color(0xFFE3F2FD),
-      },
-    ];
-    return Column(
-      children: alerts.map((alert) {
-        final String msg = alert['msg'] as String;
-        final Color color = alert['color'] as Color;
-        return Card(
-          color: color,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          margin: const EdgeInsets.symmetric(vertical: 4),
-          child: ListTile(
-            leading: const Icon(Icons.notifications, color: Color(0xFFFFA726)),
-            title: Text(msg),
-          ),
-        );
-      }).toList(),
-    );
-  }
-}
-
-// --- End My Crops Tab Implementation ---
+// --- Old My Crops Implementation Removed - Using new BLoC-based implementation ---
 
 // === CHAT SCREEN IMPLEMENTATION ===
 class ChatScreen extends StatefulWidget {
@@ -1153,23 +878,29 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     // Add initial greeting
-    _messages.add(ChatMessage(
-      text: "Namaste! I'm Sahayak, your farming assistant. How can I help you today?",
-      isFromUser: false,
-      timestamp: DateTime.now(),
-      suggestions: ["Check my crops", "Market prices", "Weather update", "Government schemes"],
-    ));
+    _messages.add(
+      ChatMessage(
+        text:
+            "Namaste! I'm Sahayak, your farming assistant. How can I help you today?",
+        isFromUser: false,
+        timestamp: DateTime.now(),
+        suggestions: [
+          "Check my crops",
+          "Market prices",
+          "Weather update",
+          "Government schemes",
+        ],
+      ),
+    );
   }
 
   Future<void> _sendMessage(String text) async {
     if (text.trim().isEmpty) return;
 
     setState(() {
-      _messages.add(ChatMessage(
-        text: text,
-        isFromUser: true,
-        timestamp: DateTime.now(),
-      ));
+      _messages.add(
+        ChatMessage(text: text, isFromUser: true, timestamp: DateTime.now()),
+      );
       _isLoading = true;
     });
 
@@ -1177,25 +908,30 @@ class _ChatScreenState extends State<ChatScreen> {
 
     try {
       final response = await ApiService.sendMessage(text, _farmerId);
-      
+
       setState(() {
-        _messages.add(ChatMessage(
-          text: response['response'] ?? 'I received your message.',
-          isFromUser: false,
-          timestamp: DateTime.now(),
-          suggestions: response['suggestions']?.cast<String>(),
-          intent: response['intent'],
-          agent: response['agent'],
-        ));
+        _messages.add(
+          ChatMessage(
+            text: response['response'] ?? 'I received your message.',
+            isFromUser: false,
+            timestamp: DateTime.now(),
+            suggestions: response['suggestions']?.cast<String>(),
+            intent: response['intent'],
+            agent: response['agent'],
+          ),
+        );
         _isLoading = false;
       });
     } catch (e) {
       setState(() {
-        _messages.add(ChatMessage(
-          text: 'Sorry, I am having technical difficulties. Please try again.',
-          isFromUser: false,
-          timestamp: DateTime.now(),
-        ));
+        _messages.add(
+          ChatMessage(
+            text:
+                'Sorry, I am having technical difficulties. Please try again.',
+            isFromUser: false,
+            timestamp: DateTime.now(),
+          ),
+        );
         _isLoading = false;
       });
     }
@@ -1234,7 +970,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     isLoading: true,
                   );
                 }
-                
+
                 final message = _messages[index];
                 return ChatBubble(
                   text: message.text,
@@ -1336,10 +1072,14 @@ class ChatBubble extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Column(
-        crossAxisAlignment: isFromUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment: isFromUser
+            ? CrossAxisAlignment.end
+            : CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: isFromUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+            mainAxisAlignment: isFromUser
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
             children: [
               if (!isFromUser) ...[
                 Container(
@@ -1349,15 +1089,24 @@ class ChatBubble extends StatelessWidget {
                     color: Color(0xFF388E3C),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.agriculture, color: Colors.white, size: 16),
+                  child: const Icon(
+                    Icons.agriculture,
+                    color: Colors.white,
+                    size: 16,
+                  ),
                 ),
                 const SizedBox(width: 8),
               ],
               Flexible(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   decoration: BoxDecoration(
-                    color: isFromUser ? const Color(0xFF388E3C) : Colors.grey[200],
+                    color: isFromUser
+                        ? const Color(0xFF388E3C)
+                        : Colors.grey[200],
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: isLoading
@@ -1394,7 +1143,9 @@ class ChatBubble extends StatelessWidget {
               ],
             ],
           ),
-          if (suggestions != null && suggestions!.isNotEmpty && !isFromUser) ...[
+          if (suggestions != null &&
+              suggestions!.isNotEmpty &&
+              !isFromUser) ...[
             const SizedBox(height: 8),
             Padding(
               padding: const EdgeInsets.only(left: 40),
@@ -1405,7 +1156,10 @@ class ChatBubble extends StatelessWidget {
                   return GestureDetector(
                     onTap: () => onSuggestionTap?.call(suggestion),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
                         border: Border.all(color: const Color(0xFF388E3C)),
                         borderRadius: BorderRadius.circular(16),

@@ -9,6 +9,8 @@ import '../models/market_insight.dart';
 import '../widgets/price_card.dart';
 import '../widgets/search_prices_card.dart';
 import '../widgets/market_insights_card.dart';
+import '../../../shared/constants/app_constants.dart';
+import '../../../shared/widgets/app_header.dart';
 
 class MarketPage extends StatelessWidget {
   const MarketPage({super.key});
@@ -18,7 +20,6 @@ class MarketPage extends StatelessWidget {
     return BlocBuilder<MarketBloc, MarketState>(
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: const Color(0xFFF5F5F5),
           body: SafeArea(
             child: RefreshIndicator(
               onRefresh: () async {
@@ -26,21 +27,25 @@ class MarketPage extends StatelessWidget {
               },
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(AppConstants.screenPadding),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Header
-                    _buildHeader(),
-                    const SizedBox(height: 20),
+                    AppHeader(
+                      title: 'Market Prices',
+                      subtitle: 'Live APMC prices • Updated every 30 min',
+                      leadingIcon: Icons.show_chart,
+                    ),
+                    const SizedBox(height: AppConstants.largePadding),
                     
                     // Search Prices Card
                     const SearchPricesCard(),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: AppConstants.largePadding),
                     
                     // Live Prices Section
                     _buildLivePricesSection(context, state),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: AppConstants.largePadding),
                     
                     // Market Insights
                     _buildMarketInsightsSection(state),
@@ -54,39 +59,7 @@ class MarketPage extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            const Icon(
-              Icons.show_chart,
-              color: Color(0xFF388E3C),
-              size: 24,
-            ),
-            const SizedBox(width: 8),
-            const Text(
-              'Market Prices',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 4),
-        Text(
-          'Live APMC prices • Updated every 30 min',
-          style: TextStyle(
-            fontSize: 12,
-            color: Colors.grey[600],
-          ),
-        ),
-      ],
-    );
-  }
+
 
   Widget _buildLivePricesSection(BuildContext context, MarketState state) {
     return Column(
@@ -98,16 +71,12 @@ class MarketPage extends StatelessWidget {
             const Icon(
               Icons.currency_rupee,
               color: Color(0xFF388E3C),
-              size: 20,
+              size: AppConstants.iconMedium,
             ),
-            const SizedBox(width: 8),
-            const Text(
+            const SizedBox(width: AppConstants.smallPadding),
+            Text(
               'Live Prices',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
-              ),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const Spacer(),
             GestureDetector(
