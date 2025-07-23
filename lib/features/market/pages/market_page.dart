@@ -89,110 +89,121 @@ class MarketPage extends StatelessWidget {
   }
 
   Widget _buildLivePricesSection(BuildContext context, MarketState state) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header with title and refresh icon
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.currency_rupee,
-                  color: Color(0xFF388E3C),
-                  size: 20,
-                ),
-                const SizedBox(width: 8),
-                const Text(
-                  'Live Prices',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
-                ),
-                const Spacer(),
-                GestureDetector(
-                  onTap: () {
-                    context.read<MarketBloc>().add(const RefreshMarketData());
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF388E3C).withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: const Icon(
-                      Icons.refresh,
-                      color: Color(0xFF388E3C),
-                      size: 16,
-                    ),
-                  ),
-                ),
-              ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Header with title and refresh icon
+        Row(
+          children: [
+            const Icon(
+              Icons.currency_rupee,
+              color: Color(0xFF388E3C),
+              size: 20,
             ),
-          ),
-          
-          // Prices list
-          if (state is MarketLoading)
-            const Padding(
+            const SizedBox(width: 8),
+            const Text(
+              'Live Prices',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
+            ),
+            const Spacer(),
+            GestureDetector(
+              onTap: () {
+                context.read<MarketBloc>().add(const RefreshMarketData());
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF388E3C).withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Icon(
+                  Icons.refresh,
+                  color: Color(0xFF388E3C),
+                  size: 18,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        
+        // Prices list
+        if (state is MarketLoading)
+          const Center(
+            child: Padding(
               padding: EdgeInsets.all(32.0),
-              child: Center(child: CircularProgressIndicator()),
-            )
-          else if (state is MarketLoaded)
-            Column(
-              children: [
-                ...state.currentPrices.map((price) => PriceCard(price: price)),
-                // View All Crops button
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: TextButton(
-                      onPressed: () {
-                        // Navigate to all crops view
-                      },
-                      style: TextButton.styleFrom(
-                        backgroundColor: const Color(0xFFF5F5F5),
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+              child: CircularProgressIndicator(),
+            ),
+          )
+        else if (state is MarketLoaded)
+          Column(
+            children: [
+              ...state.currentPrices.map((price) => PriceCard(price: price)),
+              // View All Crops button
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.only(top: 8),
+                child: TextButton(
+                  onPressed: () {
+                    // Navigate to all crops view
+                  },
+                  style: TextButton.styleFrom(
+                    backgroundColor: const Color(0xFFF8F9FA),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(
+                        color: Colors.grey[300]!,
+                        width: 1,
                       ),
-                      child: const Text(
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.visibility,
+                        color: Color(0xFF388E3C),
+                        size: 18,
+                      ),
+                      const SizedBox(width: 8),
+                      const Text(
                         'View All 5 Crops',
                         style: TextStyle(
                           color: Color(0xFF388E3C),
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              ],
-            )
-          else if (state is MarketError)
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                state.message,
-                style: const TextStyle(color: Colors.red),
               ),
+            ],
+          )
+        else if (state is MarketError)
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: Colors.red[50],
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.red[200]!),
             ),
-        ],
-      ),
+            child: Text(
+              state.message,
+              style: TextStyle(
+                color: Colors.red[700],
+                fontWeight: FontWeight.w500,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+      ],
     );
   }
 
