@@ -9,6 +9,9 @@ import 'schemes_page.dart';
 import 'features/market/market.dart';
 import 'features/home/home.dart';
 import 'features/crops/crops.dart';
+import 'shared/constants/app_constants.dart';
+import 'shared/widgets/app_header.dart';
+import 'shared/widgets/app_card.dart';
 
 void main() {
   runApp(const SahayakApp());
@@ -122,7 +125,7 @@ class HomeTab extends StatelessWidget {
           },
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            padding: const EdgeInsets.all(AppConstants.screenPadding),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -178,33 +181,40 @@ class HomeTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
-                const Text(
+                const SizedBox(height: AppConstants.smallPadding),
+                Text(
                   'Good morning, user! • 12:29 am',
-                  style: TextStyle(color: Colors.black54),
-                ),
-                const SizedBox(height: 16),
-                // Ask Sahayak Anything
-                Card(
-                  color: const Color(0xFFE8F5E9),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Colors.black54,
                   ),
+                ),
+                const SizedBox(height: AppConstants.screenPadding),
+                // Ask Sahayak Anything
+                AppCard(
+                  color: const Color(0xFFE8F5E9),
                   child: ListTile(
+                    contentPadding: EdgeInsets.zero,
                     leading: Container(
                       decoration: const BoxDecoration(
                         color: Color(0xFFB2DFDB),
                         shape: BoxShape.circle,
                       ),
-                      padding: const EdgeInsets.all(8),
-                      child: const Icon(Icons.mic, color: Color(0xFF388E3C)),
+                      padding: const EdgeInsets.all(AppConstants.smallPadding),
+                      child: const Icon(
+                        Icons.mic, 
+                        color: Color(0xFF388E3C),
+                        size: AppConstants.iconMedium,
+                      ),
                     ),
-                    title: const Text(
+                    title: Text(
                       'Ask Sahayak Anything',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    subtitle: const Text(
+                    subtitle: Text(
                       'Tap the mic to speak in Kannada or English',
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                     onTap: () {
                       Navigator.push(
@@ -214,7 +224,7 @@ class HomeTab extends StatelessWidget {
                     },
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppConstants.screenPadding),
                 // Search bar
                 Container(
                   decoration: BoxDecoration(

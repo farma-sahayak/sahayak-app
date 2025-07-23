@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'shared/constants/app_constants.dart';
+import 'shared/widgets/app_header.dart';
+import 'shared/widgets/app_card.dart';
 
 class DiseaseDetectionPage extends StatelessWidget {
   const DiseaseDetectionPage({Key? key}) : super(key: key);
@@ -6,98 +9,68 @@ class DiseaseDetectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Disease Detection')),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Title and subtitle
-            Column(
-              children: [
-                Icon(
-                  Icons.local_florist,
-                  color: Colors.green[700],
-                ), // Replace with appropriate icon
-                const SizedBox(height: 8),
-                Text(
-                  'Disease Detection',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green[700],
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Take a photo or describe symptoms',
-                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(AppConstants.screenPadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Header
+              AppHeader(
+                title: 'Disease Detection',
+                subtitle: 'Take a photo or describe symptoms',
+                leadingIcon: Icons.camera_alt,
+              ),
+              const SizedBox(height: AppConstants.largePadding),
 
             // Analyze Plant Disease Card
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      'Analyze Plant Disease',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green[800],
-                      ),
+            AppCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Analyze Plant Disease',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: const Color(0xFF388E3C),
                     ),
-                    const SizedBox(height: 16),
-                    Container(
-                      padding: const EdgeInsets.all(24.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.green.shade300,
-                          style: BorderStyle.solid,
-                          width: 2,
+                  ),
+                  const SizedBox(height: AppConstants.screenPadding),
+                  Container(
+                    padding: const EdgeInsets.all(AppConstants.largePadding),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: const Color(0xFF388E3C).withOpacity(0.3),
+                        style: BorderStyle.solid,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(AppConstants.mediumRadius),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.camera_alt,
+                          size: AppConstants.iconXLarge + 16,
+                          color: const Color(0xFF388E3C),
                         ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.camera_alt,
-                            size: 48,
-                            color: Colors.green[400],
+                        const SizedBox(height: AppConstants.smallPadding),
+                        Text(
+                          'Take Photo or tap to upload',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: const Color(0xFF388E3C),
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Take Photo or tap to upload',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.green[600],
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 16),
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        // TODO: Implement describe problem action
-                      },
-                      icon: const Icon(Icons.mic),
-                      label: const Text('Describe Problem'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        textStyle: const TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(height: AppConstants.screenPadding),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      // TODO: Implement describe problem action
+                    },
+                    icon: const Icon(Icons.mic, size: AppConstants.iconMedium),
+                    label: const Text('Describe Problem'),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),

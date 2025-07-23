@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'theme.dart';
+import 'shared/constants/app_constants.dart';
+import 'shared/widgets/app_header.dart';
+import 'shared/widgets/app_card.dart';
 
 class SchemesPage extends StatelessWidget {
   const SchemesPage({Key? key}) : super(key: key);
@@ -7,30 +10,30 @@ class SchemesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: AppBar(
-        title: const Text('Government Schemes'),
-        backgroundColor: primaryColor,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Benefits Overview Card
-            Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-              elevation: 2,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(AppConstants.screenPadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Header
+              AppHeader(
+                title: 'Government Schemes',
+                subtitle: 'Your Benefits Overview',
+                leadingIcon: Icons.policy,
+              ),
+              const SizedBox(height: AppConstants.largePadding),
+              
+              // Benefits Overview Card
+              AppCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Your Benefits Overview',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppConstants.mediumPadding),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: const [

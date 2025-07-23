@@ -7,6 +7,8 @@ import '../widgets/financial_dashboard_card.dart';
 import '../widgets/crop_detailed_card.dart';
 import '../widgets/quick_actions_grid.dart';
 import '../widgets/add_crop_dialog.dart';
+import '../../../shared/constants/app_constants.dart';
+import '../../../shared/widgets/app_header.dart';
 
 class MyCropsPage extends StatelessWidget {
   const MyCropsPage({super.key});
@@ -21,32 +23,44 @@ class MyCropsPage extends StatelessWidget {
           },
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsets.all(AppConstants.screenPadding),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Header with title and add button
-                _buildHeader(context),
-                const SizedBox(height: 16),
-                
-                // Manage crops summary
-                _buildSummaryHeader(state),
-                const SizedBox(height: 20),
+                AppHeader(
+                  title: '🌾 My Crops',
+                  subtitle: state is CropsLoaded 
+                      ? 'Manage ${state.crops.length} crops • ${state.crops.fold<double>(0, (sum, crop) => sum + crop.acres).toStringAsFixed(1)} acres'
+                      : null,
+                  actions: [
+                    IconButton(
+                      onPressed: () => _showAddCropDialog(context),
+                      icon: const Icon(
+                        Icons.add_circle,
+                        color: Color(0xFF388E3C),
+                        size: 28,
+                      ),
+                      tooltip: 'Add Crop',
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppConstants.largePadding),
                 
                 // Farm Overview (Financial Dashboard)
                 if (state is CropsLoaded && state.financialDashboard != null)
-                  FinancialDashboardCard(
-                    dashboard: state.financialDashboard!,
-                  ),
-                const SizedBox(height: 20),
+                                      FinancialDashboardCard(
+                      dashboard: state.financialDashboard!,
+                    ),
+                const SizedBox(height: AppConstants.largePadding),
                 
                 // My Crops Section
                 _buildMyCropsSection(context, state),
-                const SizedBox(height: 20),
+                const SizedBox(height: AppConstants.largePadding),
                 
                 // Quick Actions
                 const QuickActionsGrid(),
-                const SizedBox(height: 20),
+                const SizedBox(height: AppConstants.largePadding),
               ],
             ),
           ),
@@ -55,47 +69,7 @@ class MyCropsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          '🌾 My Crops',
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: const Color(0xFF388E3C),
-          ),
-        ),
-        const Spacer(),
-        IconButton(
-          onPressed: () => _showAddCropDialog(context),
-          icon: const Icon(
-            Icons.add_circle,
-            color: Color(0xFF388E3C),
-            size: 28,
-          ),
-          tooltip: 'Add Crop',
-        ),
-      ],
-    );
-  }
 
-  Widget _buildSummaryHeader(CropsState state) {
-    if (state is CropsLoaded) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Manage ${state.crops.length} crops • ${state.crops.fold<double>(0, (sum, crop) => sum + crop.acres).toStringAsFixed(1)} acres',
-            style: const TextStyle(
-              color: Colors.black54,
-              fontSize: 16,
-            ),
-          ),
-        ],
-      );
-    }
-    return const SizedBox.shrink();
-  }
 
   Widget _buildMyCropsSection(BuildContext context, CropsState state) {
     return Column(
@@ -108,7 +82,7 @@ class MyCropsPage extends StatelessWidget {
             color: const Color(0xFF388E3C),
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppConstants.mediumPadding),
         
         if (state is CropsLoading)
           const Center(
@@ -122,7 +96,7 @@ class MyCropsPage extends StatelessWidget {
               : Column(
                   children: state.crops
                       .map((crop) => Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
+                            padding: const EdgeInsets.only(bottom: AppConstants.screenPadding),
                             child: CropDetailedCard(crop: crop),
                           ))
                       .toList(),
