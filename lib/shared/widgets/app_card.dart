@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../constants/app_constants.dart';
+import '../../core/constants/app_constants.dart';
 
 class AppCard extends StatelessWidget {
   final Widget child;
@@ -35,15 +35,19 @@ class AppCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: gradient == null ? (color ?? Colors.white) : null,
         gradient: gradient,
-        borderRadius: BorderRadius.circular(borderRadius ?? AppConstants.cardRadius),
+        borderRadius: BorderRadius.circular(
+          borderRadius ?? AppConstants.cardRadius,
+        ),
         border: border,
-        boxShadow: boxShadow ?? [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        boxShadow:
+            boxShadow ??
+            [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
       ),
       child: child,
     );
@@ -53,7 +57,9 @@ class AppCard extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(borderRadius ?? AppConstants.cardRadius),
+          borderRadius: BorderRadius.circular(
+            borderRadius ?? AppConstants.cardRadius,
+          ),
           child: cardContent,
         ),
       );

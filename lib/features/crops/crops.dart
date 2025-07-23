@@ -1,20 +1,20 @@
 // Models
-export 'models/crop_detailed.dart';
-export 'models/financial_dashboard.dart';
+export 'data/models/crop_detailed.dart';
+export 'data/models/financial_dashboard.dart';
 
 // BLoC
-export 'bloc/crops_bloc.dart';
-export 'bloc/crops_event.dart';
-export 'bloc/crops_state.dart';
+export 'presentation/bloc/crops_bloc.dart';
+export 'presentation/bloc/crops_event.dart';
+export 'presentation/bloc/crops_state.dart';
 
 // Repository
-export 'repository/crops_repository.dart';
+export 'data/repositories/crops_repository.dart';
 
 // Pages
-export 'pages/my_crops_page.dart';
+export 'presentation/pages/my_crops_page.dart';
 
 // Widgets
-export 'widgets/financial_dashboard_card.dart';
-export 'widgets/crop_detailed_card.dart';
-export 'widgets/quick_actions_grid.dart';
-export 'widgets/add_crop_dialog.dart';
+export 'presentation/widgets/financial_dashboard_card.dart';
+export 'presentation/widgets/crop_detailed_card.dart';
+export 'presentation/widgets/quick_actions_grid.dart';
+export 'presentation/widgets/add_crop_dialog.dart';

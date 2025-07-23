@@ -1,55 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile/features/crops/bloc/crops_bloc.dart';
-import 'package:mobile/features/crops/pages/my_crops_page.dart';
-import 'package:mobile/features/crops/repository/crops_repository.dart';
-import 'theme.dart';
-import 'crop_service.dart';
+import 'package:mobile/features/crops/presentation/pages/my_crops_page.dart';
+import 'package:mobile/sahayak_app.dart';
 import 'api_service.dart';
-import 'package:image_picker/image_picker.dart';
 import 'disease_detection_page.dart';
 import 'features/schemes/schemes.dart';
 import 'features/market/market.dart';
 import 'features/home/home.dart';
-import 'features/crops/crops.dart' as crops;
-import 'shared/constants/app_constants.dart';
-import 'shared/widgets/app_header.dart';
+import 'core/constants/app_constants.dart';
 import 'shared/widgets/app_card.dart';
 
 void main() {
   runApp(const SahayakApp());
-}
-
-class SahayakApp extends StatelessWidget {
-  const SahayakApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) =>
-              MarketBloc(repository: MarketRepository())
-                ..add(const LoadMarketPrices()),
-        ),
-        BlocProvider(
-          create: (context) =>
-              HomeBloc(repository: HomeRepository())..add(const LoadHomeData()),
-        ),
-        BlocProvider(
-          create: (context) =>
-              CropsBloc(repository: CropsRepository())
-                ..add(const crops.LoadCrops()),
-        ),
-      ],
-      child: MaterialApp(
-        title: 'Sahayak AI',
-        theme: getSahayakTheme(),
-        home: const MainTabScaffold(),
-        debugShowCheckedModeBanner: false,
-      ),
-    );
-  }
 }
 
 class MainTabScaffold extends StatefulWidget {
