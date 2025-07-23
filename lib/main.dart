@@ -134,23 +134,12 @@ class HomeTab extends StatelessWidget {
                 // App bar row
                 Row(
                   children: [
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: const Color(0xFF388E3C),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        elevation: 0,
-                        side: const BorderSide(color: Color(0xFFB2DFDB)),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 4,
-                        ),
-                      ),
-                      icon: const Icon(Icons.download),
-                      label: const Text('Install App'),
-                      onPressed: () {},
+                    const SizedBox(height: AppConstants.smallPadding),
+                    Text(
+                      'Good morning, user! • 12:29 am',
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: Colors.black),
                     ),
                     const Spacer(),
                     IconButton(
@@ -188,13 +177,6 @@ class HomeTab extends StatelessWidget {
                       onPressed: () {},
                     ),
                   ],
-                ),
-                const SizedBox(height: AppConstants.smallPadding),
-                Text(
-                  'Good morning, user! • 12:29 am',
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium?.copyWith(color: Colors.black54),
                 ),
                 const SizedBox(height: AppConstants.screenPadding),
                 // Ask Sahayak Anything
@@ -236,21 +218,20 @@ class HomeTab extends StatelessWidget {
                 ),
                 const SizedBox(height: AppConstants.screenPadding),
                 // Search bar
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(32),
-                    border: Border.all(color: Colors.black12),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Search crops, diseases, schemes…',
-                      icon: Icon(Icons.search),
+                const TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search crops, diseases, schemes…',
+                    prefixIcon: Icon(Icons.search),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(32)),
+                      borderSide: BorderSide(color: Colors.black12),
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 16),
                 // Weather card
                 Container(
