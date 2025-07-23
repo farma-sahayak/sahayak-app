@@ -1,16 +1,26 @@
-# mobile
+# Sahayak AI - Farmer's Assistant App
 
-A new Flutter project.
+A comprehensive Flutter application designed to assist farmers with crop management, disease detection, market prices, and government schemes.
+
+## Recent Updates
+
+- ✅ Enhanced Home Card with My Crops, Alerts & Updates, and Quick Actions sections
+- ✅ Implemented BLoC pattern for scalable state management
+- ✅ Added Material Design 3 components with consistent color palette
+- ✅ Integrated pull-to-refresh functionality
+
+## Features
+
+- **Home Dashboard**: Comprehensive view with weather, market snapshot, AI tips, crops, alerts, and quick actions
+- **Disease Detection**: AI-powered crop disease identification
+- **Market Prices**: Real-time market price tracking
+- **Government Schemes**: Access to agricultural schemes and subsidies
+- **Crop Management**: Track crop health and status
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a starting point for a Flutter application targeting farmers and agricultural communities.
 
-A few resources to get you started if this is your first Flutter project:
+## Development Status
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The app is under active development with regular feature enhancements and UI improvements.
