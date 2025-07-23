@@ -6,9 +6,7 @@ class DiseaseDetectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Disease Detection'),
-      ),
+      appBar: AppBar(title: const Text('Disease Detection')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -17,7 +15,10 @@ class DiseaseDetectionPage extends StatelessWidget {
             // Title and subtitle
             Column(
               children: [
-                Icon(Icons.local_florist, color: Colors.green[700]), // Replace with appropriate icon
+                Icon(
+                  Icons.local_florist,
+                  color: Colors.green[700],
+                ), // Replace with appropriate icon
                 const SizedBox(height: 8),
                 Text(
                   'Disease Detection',
@@ -61,7 +62,7 @@ class DiseaseDetectionPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.green.shade300,
-                          style: BorderStyle.dashed,
+                          style: BorderStyle.solid,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(8),
@@ -69,13 +70,19 @@ class DiseaseDetectionPage extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.camera_alt, size: 48, color: Colors.green[400]),
+                          Icon(
+                            Icons.camera_alt,
+                            size: 48,
+                            color: Colors.green[400],
+                          ),
                           const SizedBox(height: 8),
                           Text(
-                            'Take Photo
-or tap to upload',
+                            'Take Photo or tap to upload',
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 16, color: Colors.green[600]),
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.green[600],
+                            ),
                           ),
                         ],
                       ),
@@ -94,7 +101,7 @@ or tap to upload',
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
-                      ),tag: diseaseDetectionButton
+                      ),
                     ),
                   ],
                 ),
@@ -115,7 +122,10 @@ or tap to upload',
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.lightbulb_outline, color: Colors.amber[800]), // Replace with appropriate icon
+                        Icon(
+                          Icons.lightbulb_outline,
+                          color: Colors.amber[800],
+                        ), // Replace with appropriate icon
                         const SizedBox(width: 8),
                         Text(
                           'Tips for Best Results',
@@ -137,13 +147,26 @@ or tap to upload',
                             children: [
                               Row(
                                 children: [
-                                  Icon(Icons.camera_alt, size: 18, color: Colors.grey[600]),
+                                  Icon(
+                                    Icons.camera_alt,
+                                    size: 18,
+                                    color: Colors.grey[600],
+                                  ),
                                   const SizedBox(width: 4),
-                                  Text('Photo Tips', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey[800])),
+                                  Text(
+                                    'Photo Tips',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey[800],
+                                    ),
+                                  ),
                                 ],
                               ),
                               const SizedBox(height: 4),
-                              Text('Good light, focus on affected area', style: TextStyle(color: Colors.grey[600])),
+                              Text(
+                                'Good light, focus on affected area',
+                                style: TextStyle(color: Colors.grey[600]),
+                              ),
                             ],
                           ),
                         ),
@@ -154,13 +177,26 @@ or tap to upload',
                             children: [
                               Row(
                                 children: [
-                                  Icon(Icons.mic, size: 18, color: Colors.grey[600]),
+                                  Icon(
+                                    Icons.mic,
+                                    size: 18,
+                                    color: Colors.grey[600],
+                                  ),
                                   const SizedBox(width: 4),
-                                  Text('Voice Tips', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey[800])),
+                                  Text(
+                                    'Voice Tips',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey[800],
+                                    ),
+                                  ),
                                 ],
                               ),
                               const SizedBox(height: 4),
-                              Text('Describe symptoms clearly', style: TextStyle(color: Colors.grey[600])),
+                              Text(
+                                'Describe symptoms clearly',
+                                style: TextStyle(color: Colors.grey[600]),
+                              ),
                             ],
                           ),
                         ),
@@ -177,7 +213,8 @@ or tap to upload',
                           icon: const Icon(Icons.camera_alt_outlined),
                           label: const Text('Sample Photos'),
                           style: OutlinedButton.styleFrom(
-                            foregroundColor: Colors.green, side: const BorderSide(color: Colors.green),
+                            foregroundColor: Colors.green,
+                            side: const BorderSide(color: Colors.green),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -190,7 +227,8 @@ or tap to upload',
                           icon: const Icon(Icons.volume_up),
                           label: const Text('Audio Guide'),
                           style: OutlinedButton.styleFrom(
-                            foregroundColor: Colors.green, side: const BorderSide(color: Colors.green),
+                            foregroundColor: Colors.green,
+                            side: const BorderSide(color: Colors.green),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
