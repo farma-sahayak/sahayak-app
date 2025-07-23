@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'theme.dart';
 import 'crop_service.dart';
 import 'api_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'disease_detection_page.dart';
 import 'schemes_page.dart';
+import 'features/market/market.dart';
 
 void main() {
   runApp(const SahayakApp());
@@ -15,11 +17,20 @@ class SahayakApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Sahayak AI',
-      theme: getSahayakTheme(),
-      home: const MainTabScaffold(),
-      debugShowCheckedModeBanner: false,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => MarketBloc(
+            repository: MarketRepository(),
+          )..add(const LoadMarketPrices()),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Sahayak AI',
+        theme: getSahayakTheme(),
+        home: const MainTabScaffold(),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }
@@ -38,7 +49,7 @@ class _MainTabScaffoldState extends State<MainTabScaffold> {
     const HomeTab(),
     const MyCropsTab(),
     const DiseaseDetectionPage(),
-    Center(child: Text('Market (Coming Soon)')),
+    const MarketPage(),
     const SchemesPage(),
   ];
 
