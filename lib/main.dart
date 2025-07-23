@@ -8,7 +8,7 @@ import 'crop_service.dart';
 import 'api_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'disease_detection_page.dart';
-import 'schemes_page.dart';
+import 'features/schemes/schemes.dart';
 import 'features/market/market.dart';
 import 'features/home/home.dart';
 import 'features/crops/crops.dart' as crops;
