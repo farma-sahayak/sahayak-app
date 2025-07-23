@@ -10,3 +10,4 @@ export 'widgets/price_card.dart';
 export 'widgets/search_prices_card.dart';
 export 'widgets/market_insights_card.dart';
 export 'widgets/price_alert_dialog.dart';
+export 'widgets/voice_search_mixin.dart';

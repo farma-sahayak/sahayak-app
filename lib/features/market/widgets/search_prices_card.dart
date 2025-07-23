@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/market_bloc.dart';
 import '../bloc/market_event.dart';
+import 'voice_search_mixin.dart';
 
 class SearchPricesCard extends StatefulWidget {
   const SearchPricesCard({super.key});
@@ -10,13 +11,35 @@ class SearchPricesCard extends StatefulWidget {
   State<SearchPricesCard> createState() => _SearchPricesCardState();
 }
 
-class _SearchPricesCardState extends State<SearchPricesCard> {
+class _SearchPricesCardState extends State<SearchPricesCard> with VoiceSearchMixin {
   final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    initializeSpeech();
+  }
 
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  void _startVoiceSearch() {
+    startListening((result) {
+      _searchController.text = result;
+      context.read<MarketBloc>().add(SearchCropPrices(result));
+      
+      // Show feedback
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Voice search: "$result"'),
+          duration: const Duration(seconds: 2),
+          backgroundColor: const Color(0xFF388E3C),
+        ),
+      );
+    });
   }
 
   @override
@@ -72,7 +95,7 @@ class _SearchPricesCardState extends State<SearchPricesCard> {
           ),
           const SizedBox(height: 16),
           
-          // Search bar
+          // Search bar with voice support
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -88,7 +111,7 @@ class _SearchPricesCardState extends State<SearchPricesCard> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search crop prices',
+                hintText: 'Search crop prices or speak...',
                 hintStyle: TextStyle(
                   color: Colors.grey[400],
                   fontSize: 14,
@@ -98,27 +121,69 @@ class _SearchPricesCardState extends State<SearchPricesCard> {
                   color: Color(0xFF388E3C),
                   size: 20,
                 ),
-                suffixIcon: GestureDetector(
-                  onTap: () {
-                    if (_searchController.text.isNotEmpty) {
-                      context
-                          .read<MarketBloc>()
-                          .add(SearchCropPrices(_searchController.text));
-                    }
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.all(8),
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF388E3C),
-                      borderRadius: BorderRadius.circular(6),
+                suffixIcon: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                                         // Voice search button
+                     GestureDetector(
+                       onTap: () {
+                         _startVoiceSearch();
+                       },
+                       child: AnimatedContainer(
+                         duration: const Duration(milliseconds: 200),
+                         margin: const EdgeInsets.only(right: 4),
+                         padding: const EdgeInsets.all(6),
+                         decoration: BoxDecoration(
+                           color: isListening 
+                               ? const Color(0xFF388E3C).withOpacity(0.1)
+                               : Colors.grey[100],
+                           borderRadius: BorderRadius.circular(6),
+                           border: isListening 
+                               ? Border.all(color: const Color(0xFF388E3C), width: 1)
+                               : null,
+                         ),
+                         child: isListening
+                             ? const SizedBox(
+                                 width: 16,
+                                 height: 16,
+                                 child: CircularProgressIndicator(
+                                   strokeWidth: 2,
+                                   valueColor: AlwaysStoppedAnimation<Color>(
+                                     Color(0xFF388E3C),
+                                   ),
+                                 ),
+                               )
+                             : const Icon(
+                                 Icons.mic,
+                                 color: Color(0xFF388E3C),
+                                 size: 16,
+                               ),
+                       ),
+                     ),
+                    // Search button
+                    GestureDetector(
+                      onTap: () {
+                        if (_searchController.text.isNotEmpty) {
+                          context
+                              .read<MarketBloc>()
+                              .add(SearchCropPrices(_searchController.text));
+                        }
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF388E3C),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: const Icon(
+                          Icons.arrow_forward,
+                          color: Colors.white,
+                          size: 16,
+                        ),
+                      ),
                     ),
-                    child: const Icon(
-                      Icons.arrow_forward,
-                      color: Colors.white,
-                      size: 16,
-                    ),
-                  ),
+                  ],
                 ),
                 border: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(
@@ -135,13 +200,12 @@ class _SearchPricesCardState extends State<SearchPricesCard> {
           ),
           const SizedBox(height: 16),
           
-          // Quick stats
+          // Quick stats - horizontal layout
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _buildQuickStat('5', 'Available', Colors.black),
-              const SizedBox(width: 24),
               _buildQuickStat('3', 'Down', Colors.red),
-              const SizedBox(width: 24),
               _buildQuickStat('2', 'Up', const Color(0xFF388E3C)),
             ],
           ),

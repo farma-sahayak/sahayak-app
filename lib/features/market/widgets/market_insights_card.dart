@@ -49,24 +49,79 @@ class MarketInsightsCard extends StatelessWidget {
             ),
           ),
           
-          // Insights content
+          // Insights content - horizontal layout
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: [
                 if (insights.isNotEmpty) ...[
-                  _buildInsightItem(
-                    'Best Time',
-                    'Morning hours',
-                    Icons.access_time,
-                    const Color(0xFF388E3C),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildInsightItem(
+                          'Best Time',
+                          'Morning hours',
+                          Icons.access_time,
+                          const Color(0xFF388E3C),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _buildInsightItem(
+                          'Festival Spike',
+                          'Higher demand',
+                          Icons.trending_up,
+                          Colors.orange,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 12),
-                  _buildInsightItem(
-                    'Festival Spike',
-                    'Higher demand',
-                    Icons.trending_up,
-                    Colors.orange,
+                  const SizedBox(height: 16),
+                  
+                  // Additional info section
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF8F9FA),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: Colors.grey[200]!,
+                        width: 1,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.info_outline,
+                              size: 14,
+                              color: Colors.grey[600],
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              'Market Information',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          '• Prices updated every 30 minutes\n• Based on APMC data from major markets\n• Higher prices during festival seasons',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.grey[600],
+                            height: 1.4,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ] else ...[
                   Text(
@@ -119,7 +174,7 @@ class MarketInsightsCard extends StatelessWidget {
     IconData icon,
     Color color,
   ) {
-    return Row(
+    return Column(
       children: [
         Container(
           padding: const EdgeInsets.all(8),
@@ -133,28 +188,24 @@ class MarketInsightsCard extends StatelessWidget {
             size: 16,
           ),
         ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-              ),
-              Text(
-                description,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey[600],
-                ),
-              ),
-            ],
+        const SizedBox(height: 8),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
           ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 2),
+        Text(
+          description,
+          style: TextStyle(
+            fontSize: 10,
+            color: Colors.grey[600],
+          ),
+          textAlign: TextAlign.center,
         ),
       ],
     );
