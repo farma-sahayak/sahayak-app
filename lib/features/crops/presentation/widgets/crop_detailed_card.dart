@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../data/models/crop_detailed.dart';
-import '../bloc/crops_bloc.dart';
-import '../bloc/crops_event.dart';
 
 class CropDetailedCard extends StatelessWidget {
   final CropDetailed crop;
@@ -18,7 +15,7 @@ class CropDetailedCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -64,7 +61,7 @@ class CropDetailedCard extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: _hexToColor(crop.status.statusColor).withOpacity(0.1),
+            color: _hexToColor(crop.status.statusColor).withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Text(crop.emoji, style: const TextStyle(fontSize: 24)),
@@ -94,7 +91,7 @@ class CropDetailedCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: _hexToColor(
                         crop.status.statusColor,
-                      ).withOpacity(0.15),
+                      ).withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -315,7 +312,7 @@ class CropDetailedCard extends StatelessWidget {
         IconButton(
           onPressed: () => _showVoiceAssistant(context),
           style: IconButton.styleFrom(
-            backgroundColor: const Color(0xFF388E3C).withOpacity(0.1),
+            backgroundColor: const Color(0xFF388E3C).withValues(alpha: 0.1),
             foregroundColor: const Color(0xFF388E3C),
           ),
           icon: const Icon(Icons.mic, size: 20),

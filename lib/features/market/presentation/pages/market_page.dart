@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import '../bloc/market_bloc.dart';
 import '../bloc/market_event.dart';
 import '../bloc/market_state.dart';
-import '../../data/models/market_price.dart';
-import '../../data/models/market_insight.dart';
 import '../widgets/price_card.dart';
 import '../widgets/search_prices_card.dart';
 import '../widgets/market_insights_card.dart';
@@ -81,7 +78,7 @@ class MarketPage extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF388E3C).withOpacity(0.1),
+                  color: const Color(0xFF388E3C).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(

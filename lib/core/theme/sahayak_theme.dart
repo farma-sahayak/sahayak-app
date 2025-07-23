@@ -58,7 +58,7 @@ ThemeData getSahayakTheme() {
     useMaterial3: true,
     fontFamily: 'Roboto',
     scaffoldBackgroundColor: backgroundColor,
-    
+
     // AppBar Theme
     appBarTheme: const AppBarTheme(
       backgroundColor: primaryColor,
@@ -71,7 +71,7 @@ ThemeData getSahayakTheme() {
         color: Colors.white,
       ),
     ),
-    
+
     // Card Theme
     cardTheme: CardThemeData(
       color: surfaceColor,
@@ -80,9 +80,9 @@ ThemeData getSahayakTheme() {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
-      shadowColor: Colors.black.withOpacity(0.1),
+      shadowColor: Colors.black.withValues(alpha: 0.1),
     ),
-    
+
     // Elevated Button Theme
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -90,44 +90,31 @@ ThemeData getSahayakTheme() {
         foregroundColor: Colors.white,
         elevation: 2,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        textStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
       ),
     ),
-    
+
     // Outlined Button Theme
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         foregroundColor: primaryColor,
         side: const BorderSide(color: primaryColor, width: 1.5),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        textStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
       ),
     ),
-    
+
     // Text Button Theme
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         foregroundColor: primaryColor,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        textStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-        ),
+        textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
       ),
     ),
-    
+
     // Input Decoration Theme
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
@@ -150,7 +137,7 @@ ThemeData getSahayakTheme() {
       filled: true,
       fillColor: Colors.grey[50],
     ),
-    
+
     // Text Theme
     textTheme: const TextTheme(
       // Headlines
@@ -169,7 +156,7 @@ ThemeData getSahayakTheme() {
         fontWeight: FontWeight.w600,
         color: textPrimary,
       ),
-      
+
       // Titles
       titleLarge: TextStyle(
         fontSize: 18,
@@ -186,7 +173,7 @@ ThemeData getSahayakTheme() {
         fontWeight: FontWeight.w600,
         color: textPrimary,
       ),
-      
+
       // Body
       bodyLarge: TextStyle(
         fontSize: 16,
@@ -203,7 +190,7 @@ ThemeData getSahayakTheme() {
         fontWeight: FontWeight.normal,
         color: textSecondary,
       ),
-      
+
       // Labels
       labelLarge: TextStyle(
         fontSize: 14,
@@ -221,13 +208,10 @@ ThemeData getSahayakTheme() {
         color: textHint,
       ),
     ),
-    
+
     // Icon Theme
-    iconTheme: const IconThemeData(
-      color: textSecondary,
-      size: 24,
-    ),
-    
+    iconTheme: const IconThemeData(color: textSecondary, size: 24),
+
     // Divider Theme
     dividerTheme: DividerThemeData(
       color: Colors.grey[200],

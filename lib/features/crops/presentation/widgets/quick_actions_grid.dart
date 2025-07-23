@@ -12,7 +12,7 @@ class QuickActionsGrid extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -29,7 +29,7 @@ class QuickActionsGrid extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF9C27B0).withOpacity(0.1),
+                    color: const Color(0xFF9C27B0).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(
@@ -128,11 +128,7 @@ class QuickActionsGrid extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                icon,
-                color: Colors.white,
-                size: 24,
-              ),
+              Icon(icon, color: Colors.white, size: 24),
               const SizedBox(height: 6),
               Flexible(
                 child: Text(
@@ -243,10 +239,19 @@ class QuickActionsGrid extends StatelessWidget {
               ),
               items: const [
                 DropdownMenuItem(value: 'seeds', child: Text('🌱 Seeds')),
-                DropdownMenuItem(value: 'fertilizer', child: Text('🧪 Fertilizer')),
-                DropdownMenuItem(value: 'pesticides', child: Text('🐛 Pesticides')),
+                DropdownMenuItem(
+                  value: 'fertilizer',
+                  child: Text('🧪 Fertilizer'),
+                ),
+                DropdownMenuItem(
+                  value: 'pesticides',
+                  child: Text('🐛 Pesticides'),
+                ),
                 DropdownMenuItem(value: 'labor', child: Text('👷 Labor')),
-                DropdownMenuItem(value: 'irrigation', child: Text('💧 Irrigation')),
+                DropdownMenuItem(
+                  value: 'irrigation',
+                  child: Text('💧 Irrigation'),
+                ),
                 DropdownMenuItem(value: 'other', child: Text('📝 Other')),
               ],
               onChanged: (value) {},
@@ -270,7 +275,10 @@ class QuickActionsGrid extends StatelessWidget {
                 DropdownMenuItem(value: 'tomato', child: Text('🍅 Tomato')),
                 DropdownMenuItem(value: 'brinjal', child: Text('🍆 Brinjal')),
                 DropdownMenuItem(value: 'chili', child: Text('🌶️ Chili')),
-                DropdownMenuItem(value: 'general', child: Text('🌾 General Farm')),
+                DropdownMenuItem(
+                  value: 'general',
+                  child: Text('🌾 General Farm'),
+                ),
               ],
               onChanged: (value) {},
             ),
@@ -336,10 +344,19 @@ class QuickActionsGrid extends StatelessWidget {
               ),
               items: const [
                 DropdownMenuItem(value: 'watering', child: Text('💧 Watering')),
-                DropdownMenuItem(value: 'fertilizing', child: Text('🧪 Fertilizing')),
-                DropdownMenuItem(value: 'pest_control', child: Text('🐛 Pest Control')),
+                DropdownMenuItem(
+                  value: 'fertilizing',
+                  child: Text('🧪 Fertilizing'),
+                ),
+                DropdownMenuItem(
+                  value: 'pest_control',
+                  child: Text('🐛 Pest Control'),
+                ),
                 DropdownMenuItem(value: 'pruning', child: Text('✂️ Pruning')),
-                DropdownMenuItem(value: 'harvesting', child: Text('🌾 Harvesting')),
+                DropdownMenuItem(
+                  value: 'harvesting',
+                  child: Text('🌾 Harvesting'),
+                ),
                 DropdownMenuItem(value: 'other', child: Text('📝 Other')),
               ],
               onChanged: (value) {},
@@ -467,10 +484,7 @@ class QuickActionsGrid extends StatelessWidget {
   ) {
     return ListTile(
       leading: Icon(icon, color: color),
-      title: Text(
-        title,
-        style: const TextStyle(fontWeight: FontWeight.w600),
-      ),
+      title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
       subtitle: Text(subtitle),
       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
       onTap: onTap,
@@ -489,9 +503,7 @@ class QuickActionsGrid extends StatelessWidget {
         ),
         backgroundColor: const Color(0xFF4CAF50),
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
   }

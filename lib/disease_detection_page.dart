@@ -39,7 +39,7 @@ class DiseaseDetectionPage extends StatelessWidget {
                       padding: const EdgeInsets.all(AppConstants.largePadding),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: const Color(0xFF388E3C).withOpacity(0.3),
+                          color: const Color(0xFF388E3C).withValues(alpha: 0.3),
                           style: BorderStyle.solid,
                           width: 2,
                         ),

@@ -19,7 +19,7 @@ class FinancialDashboardCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF388E3C).withOpacity(0.1),
+            color: const Color(0xFF388E3C).withValues(alpha: 0.1),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -36,7 +36,7 @@ class FinancialDashboardCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF388E3C).withOpacity(0.1),
+                    color: const Color(0xFF388E3C).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(
@@ -72,7 +72,7 @@ class FinancialDashboardCard extends StatelessWidget {
                 Container(
                   width: 1,
                   height: 60,
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                 ),
                 Expanded(
                   child: _buildMetricColumn(
@@ -85,7 +85,7 @@ class FinancialDashboardCard extends StatelessWidget {
                 Container(
                   width: 1,
                   height: 60,
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                 ),
                 Expanded(
                   child: _buildMetricColumn(

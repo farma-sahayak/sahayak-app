@@ -108,7 +108,7 @@ class HelpDocumentsSection extends StatelessWidget {
             decoration: BoxDecoration(
               color: greenLight,
               borderRadius: BorderRadius.circular(AppConstants.mediumRadius),
-              border: Border.all(color: primaryColor.withOpacity(0.2)),
+              border: Border.all(color: primaryColor.withValues(alpha: 0.2)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,7 +184,7 @@ class _QuickAccessCard extends StatelessWidget {
           Text(
             subtitle,
             style: theme.textTheme.bodySmall?.copyWith(
-              color: color.withOpacity(0.8),
+              color: color.withValues(alpha: 0.8),
             ),
             textAlign: TextAlign.center,
           ),
@@ -225,7 +225,7 @@ class _ActionButton extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(AppConstants.smallPadding),
               decoration: BoxDecoration(
-                color: primaryColor.withOpacity(0.1),
+                color: primaryColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(AppConstants.smallRadius),
               ),
               child: Icon(

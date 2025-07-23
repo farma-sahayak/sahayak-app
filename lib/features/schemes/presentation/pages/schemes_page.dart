@@ -206,12 +206,12 @@ class _SchemesPageViewState extends State<_SchemesPageView> {
                               AppConstants.mediumPadding,
                             ),
                             decoration: BoxDecoration(
-                              color: primaryColor.withOpacity(0.05),
+                              color: primaryColor.withValues(alpha: 0.05),
                               borderRadius: BorderRadius.circular(
                                 AppConstants.mediumRadius,
                               ),
                               border: Border.all(
-                                color: primaryColor.withOpacity(0.2),
+                                color: primaryColor.withValues(alpha: 0.2),
                               ),
                             ),
                             child: Column(

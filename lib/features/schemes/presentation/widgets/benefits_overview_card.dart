@@ -17,8 +17,8 @@ class BenefitsOverviewCard extends StatelessWidget {
 
     return GradientCard(
       gradientColors: [
-        primaryColor.withOpacity(0.1),
-        primaryColor.withOpacity(0.05),
+        primaryColor.withValues(alpha: 0.1),
+        primaryColor.withValues(alpha: 0.05),
       ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

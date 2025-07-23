@@ -11,7 +11,8 @@ class SearchPricesCard extends StatefulWidget {
   State<SearchPricesCard> createState() => _SearchPricesCardState();
 }
 
-class _SearchPricesCardState extends State<SearchPricesCard> with VoiceSearchMixin {
+class _SearchPricesCardState extends State<SearchPricesCard>
+    with VoiceSearchMixin {
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -30,7 +31,7 @@ class _SearchPricesCardState extends State<SearchPricesCard> with VoiceSearchMix
     startListening((result) {
       _searchController.text = result;
       context.read<MarketBloc>().add(SearchCropPrices(result));
-      
+
       // Show feedback
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -49,7 +50,7 @@ class _SearchPricesCardState extends State<SearchPricesCard> with VoiceSearchMix
         color: const Color(0xFFE8F5E8), // Light green background
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: const Color(0xFF388E3C).withOpacity(0.2),
+          color: const Color(0xFF388E3C).withValues(alpha: 0.2),
           width: 1,
         ),
       ),
@@ -66,11 +67,7 @@ class _SearchPricesCardState extends State<SearchPricesCard> with VoiceSearchMix
                   color: const Color(0xFF388E3C),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Icon(
-                  Icons.search,
-                  color: Colors.white,
-                  size: 16,
-                ),
+                child: const Icon(Icons.search, color: Colors.white, size: 16),
               ),
               const SizedBox(width: 12),
               const Text(
@@ -84,17 +81,14 @@ class _SearchPricesCardState extends State<SearchPricesCard> with VoiceSearchMix
             ],
           ),
           const SizedBox(height: 8),
-          
+
           // Subtitle
           Text(
             'Find crop best market',
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey[600],
-            ),
+            style: TextStyle(fontSize: 12, color: Colors.grey[600]),
           ),
           const SizedBox(height: 16),
-          
+
           // Search bar with voice support
           Container(
             decoration: BoxDecoration(
@@ -102,7 +96,7 @@ class _SearchPricesCardState extends State<SearchPricesCard> with VoiceSearchMix
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 4,
                   offset: const Offset(0, 1),
                 ),
@@ -112,10 +106,7 @@ class _SearchPricesCardState extends State<SearchPricesCard> with VoiceSearchMix
               controller: _searchController,
               decoration: InputDecoration(
                 hintText: 'Search crop prices or speak...',
-                hintStyle: TextStyle(
-                  color: Colors.grey[400],
-                  fontSize: 14,
-                ),
+                hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
                 prefixIcon: const Icon(
                   Icons.search,
                   color: Color(0xFF388E3C),
@@ -124,49 +115,52 @@ class _SearchPricesCardState extends State<SearchPricesCard> with VoiceSearchMix
                 suffixIcon: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                                         // Voice search button
-                     GestureDetector(
-                       onTap: () {
-                         _startVoiceSearch();
-                       },
-                       child: AnimatedContainer(
-                         duration: const Duration(milliseconds: 200),
-                         margin: const EdgeInsets.only(right: 4),
-                         padding: const EdgeInsets.all(6),
-                         decoration: BoxDecoration(
-                           color: isListening 
-                               ? const Color(0xFF388E3C).withOpacity(0.1)
-                               : Colors.grey[100],
-                           borderRadius: BorderRadius.circular(6),
-                           border: isListening 
-                               ? Border.all(color: const Color(0xFF388E3C), width: 1)
-                               : null,
-                         ),
-                         child: isListening
-                             ? const SizedBox(
-                                 width: 16,
-                                 height: 16,
-                                 child: CircularProgressIndicator(
-                                   strokeWidth: 2,
-                                   valueColor: AlwaysStoppedAnimation<Color>(
-                                     Color(0xFF388E3C),
-                                   ),
-                                 ),
-                               )
-                             : const Icon(
-                                 Icons.mic,
-                                 color: Color(0xFF388E3C),
-                                 size: 16,
-                               ),
-                       ),
-                     ),
+                    // Voice search button
+                    GestureDetector(
+                      onTap: () {
+                        _startVoiceSearch();
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        margin: const EdgeInsets.only(right: 4),
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: isListening
+                              ? const Color(0xFF388E3C).withValues(alpha: 0.1)
+                              : Colors.grey[100],
+                          borderRadius: BorderRadius.circular(6),
+                          border: isListening
+                              ? Border.all(
+                                  color: const Color(0xFF388E3C),
+                                  width: 1,
+                                )
+                              : null,
+                        ),
+                        child: isListening
+                            ? const SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Color(0xFF388E3C),
+                                  ),
+                                ),
+                              )
+                            : const Icon(
+                                Icons.mic,
+                                color: Color(0xFF388E3C),
+                                size: 16,
+                              ),
+                      ),
+                    ),
                     // Search button
                     GestureDetector(
                       onTap: () {
                         if (_searchController.text.isNotEmpty) {
-                          context
-                              .read<MarketBloc>()
-                              .add(SearchCropPrices(_searchController.text));
+                          context.read<MarketBloc>().add(
+                            SearchCropPrices(_searchController.text),
+                          );
                         }
                       },
                       child: Container(
@@ -199,7 +193,7 @@ class _SearchPricesCardState extends State<SearchPricesCard> with VoiceSearchMix
             ),
           ),
           const SizedBox(height: 16),
-          
+
           // Quick stats - horizontal layout
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -225,13 +219,7 @@ class _SearchPricesCardState extends State<SearchPricesCard> with VoiceSearchMix
             color: color,
           ),
         ),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            color: Colors.grey[600],
-          ),
-        ),
+        Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
       ],
     );
   }
