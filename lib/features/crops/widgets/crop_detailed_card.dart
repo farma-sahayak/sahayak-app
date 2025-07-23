@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/crop_detailed.dart';
+import '../bloc/crops_bloc.dart';
+import '../bloc/crops_event.dart';
 
 class CropDetailedCard extends StatelessWidget {
   final CropDetailed crop;
@@ -378,7 +381,7 @@ class CropDetailedCard extends StatelessWidget {
                   child: ElevatedButton.icon(
                     onPressed: () {
                       Navigator.pop(context);
-                      _pickImage(ImageSource.camera);
+                      _pickImage(ImageSource.camera, context);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF388E3C),
@@ -394,7 +397,7 @@ class CropDetailedCard extends StatelessWidget {
                   child: OutlinedButton.icon(
                     onPressed: () {
                       Navigator.pop(context);
-                      _pickImage(ImageSource.gallery);
+                      _pickImage(ImageSource.gallery, context);
                     },
                     style: OutlinedButton.styleFrom(
                       foregroundColor: const Color(0xFF388E3C),
@@ -413,7 +416,7 @@ class CropDetailedCard extends StatelessWidget {
     );
   }
 
-  Future<void> _pickImage(ImageSource source) async {
+  void _pickImage(ImageSource source, BuildContext context) async {
     try {
       final ImagePicker picker = ImagePicker();
       final XFile? image = await picker.pickImage(source: source);
@@ -422,9 +425,21 @@ class CropDetailedCard extends StatelessWidget {
         // TODO: Upload image and analyze with AI
         // For now, just show a success message
         // context.read<CropsBloc>().add(UploadCropImage(cropId: crop.id, imagePath: image.path));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Image uploaded successfully! AI analysis coming soon.'),
+            backgroundColor: Color(0xFF4CAF50),
+          ),
+        );
       }
     } catch (e) {
       // Handle error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error uploading image: ${e.toString()}'),
+          backgroundColor: const Color(0xFFE53935),
+        ),
+      );
     }
   }
 
