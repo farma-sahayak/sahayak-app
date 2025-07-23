@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile/features/crops/bloc/crops_bloc.dart';
+import 'package:mobile/features/crops/pages/my_crops_page.dart';
+import 'package:mobile/features/crops/repository/crops_repository.dart';
 import 'theme.dart';
 import 'crop_service.dart';
 import 'api_service.dart';
@@ -8,7 +11,7 @@ import 'disease_detection_page.dart';
 import 'schemes_page.dart';
 import 'features/market/market.dart';
 import 'features/home/home.dart';
-import 'features/crops/crops.dart';
+import 'features/crops/crops.dart' as crops;
 import 'shared/constants/app_constants.dart';
 import 'shared/widgets/app_header.dart';
 import 'shared/widgets/app_card.dart';
@@ -25,19 +28,18 @@ class SahayakApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => MarketBloc(
-            repository: MarketRepository(),
-          )..add(const LoadMarketPrices()),
+          create: (context) =>
+              MarketBloc(repository: MarketRepository())
+                ..add(const LoadMarketPrices()),
         ),
         BlocProvider(
-          create: (context) => HomeBloc(
-            repository: HomeRepository(),
-          )..add(const LoadHomeData()),
+          create: (context) =>
+              HomeBloc(repository: HomeRepository())..add(const LoadHomeData()),
         ),
         BlocProvider(
-          create: (context) => CropsBloc(
-            repository: CropsRepository(),
-          )..add(const LoadCrops()),
+          create: (context) =>
+              CropsBloc(repository: CropsRepository())
+                ..add(const crops.LoadCrops()),
         ),
       ],
       child: MaterialApp(
@@ -154,7 +156,10 @@ class HomeTab extends StatelessWidget {
                     IconButton(
                       icon: Stack(
                         children: [
-                          const Icon(Icons.notifications_none, color: Colors.black),
+                          const Icon(
+                            Icons.notifications_none,
+                            color: Colors.black,
+                          ),
                           Positioned(
                             right: 0,
                             child: Container(
@@ -164,10 +169,13 @@ class HomeTab extends StatelessWidget {
                                 shape: BoxShape.circle,
                               ),
                               child: Text(
-                                state is HomeLoaded 
+                                state is HomeLoaded
                                     ? '${state.notifications.where((n) => !n.isRead).length}'
                                     : '3',
-                                style: const TextStyle(color: Colors.white, fontSize: 10),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                ),
                               ),
                             ),
                           ),
@@ -184,9 +192,9 @@ class HomeTab extends StatelessWidget {
                 const SizedBox(height: AppConstants.smallPadding),
                 Text(
                   'Good morning, user! • 12:29 am',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.black54,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(color: Colors.black54),
                 ),
                 const SizedBox(height: AppConstants.screenPadding),
                 // Ask Sahayak Anything
@@ -201,7 +209,7 @@ class HomeTab extends StatelessWidget {
                       ),
                       padding: const EdgeInsets.all(AppConstants.smallPadding),
                       child: const Icon(
-                        Icons.mic, 
+                        Icons.mic,
                         color: Color(0xFF388E3C),
                         size: AppConstants.iconMedium,
                       ),
@@ -219,7 +227,9 @@ class HomeTab extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const ChatScreen()),
+                        MaterialPageRoute(
+                          builder: (context) => const ChatScreen(),
+                        ),
                       );
                     },
                   ),
@@ -350,7 +360,10 @@ class HomeTab extends StatelessWidget {
                           ),
                           const Spacer(),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(8),
@@ -423,7 +436,10 @@ class HomeTab extends StatelessWidget {
                           ),
                           const Spacer(),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
                             decoration: BoxDecoration(
                               color: const Color(0xFF388E3C).withOpacity(0.1),
                               borderRadius: BorderRadius.circular(8),
@@ -461,7 +477,11 @@ class HomeTab extends StatelessWidget {
                               child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.volume_up, color: Colors.white, size: 16),
+                                  Icon(
+                                    Icons.volume_up,
+                                    color: Colors.white,
+                                    size: 16,
+                                  ),
                                   SizedBox(width: 6),
                                   Text(
                                     'Listen to tip',
@@ -568,12 +588,14 @@ class HomeTab extends StatelessWidget {
           else if (state is HomeLoaded)
             Column(
               children: state.crops
-                  .map((crop) => CropCard(
-                        crop: crop,
-                        onTap: () {
-                          // Navigate to crop details
-                        },
-                      ))
+                  .map(
+                    (crop) => CropCard(
+                      crop: crop,
+                      onTap: () {
+                        // Navigate to crop details
+                      },
+                    ),
+                  )
                   .toList(),
             )
           else if (state is HomeError)
@@ -643,19 +665,21 @@ class HomeTab extends StatelessWidget {
           else if (state is HomeLoaded)
             Column(
               children: state.notifications
-                  .map((notification) => NotificationCard(
-                        notification: notification,
-                        onTap: () {
-                          context.read<HomeBloc>().add(
-                                MarkNotificationAsRead(notification.id),
-                              );
-                        },
-                        onPlayAudio: () {
-                          context.read<HomeBloc>().add(
-                                PlayNotificationAudio(notification.id),
-                              );
-                        },
-                      ))
+                  .map(
+                    (notification) => NotificationCard(
+                      notification: notification,
+                      onTap: () {
+                        context.read<HomeBloc>().add(
+                          MarkNotificationAsRead(notification.id),
+                        );
+                      },
+                      onPlayAudio: () {
+                        context.read<HomeBloc>().add(
+                          PlayNotificationAudio(notification.id),
+                        );
+                      },
+                    ),
+                  )
                   .toList(),
             )
           else if (state is HomeError)
@@ -736,14 +760,15 @@ class HomeTab extends StatelessWidget {
                     },
                   ),
                   const SizedBox(width: 12),
-                                     QuickActionButton(
-                     action: QuickActions.defaultActions[1],
-                     onTap: () {
-                       // Navigate to market tab
-                       final mainTabScaffold = context.findAncestorStateOfType<_MainTabScaffoldState>();
-                       mainTabScaffold?.changeTab(3);
-                     },
-                   ),
+                  QuickActionButton(
+                    action: QuickActions.defaultActions[1],
+                    onTap: () {
+                      // Navigate to market tab
+                      final mainTabScaffold = context
+                          .findAncestorStateOfType<_MainTabScaffoldState>();
+                      mainTabScaffold?.changeTab(3);
+                    },
+                  ),
                 ],
               ),
               const SizedBox(height: 12),
@@ -761,14 +786,15 @@ class HomeTab extends StatelessWidget {
                     },
                   ),
                   const SizedBox(width: 12),
-                                     QuickActionButton(
-                     action: QuickActions.defaultActions[3],
-                     onTap: () {
-                       // Navigate to my crops tab
-                       final mainTabScaffold = context.findAncestorStateOfType<_MainTabScaffoldState>();
-                       mainTabScaffold?.changeTab(1);
-                     },
-                   ),
+                  QuickActionButton(
+                    action: QuickActions.defaultActions[3],
+                    onTap: () {
+                      // Navigate to my crops tab
+                      final mainTabScaffold = context
+                          .findAncestorStateOfType<_MainTabScaffoldState>();
+                      mainTabScaffold?.changeTab(1);
+                    },
+                  ),
                 ],
               ),
             ],
@@ -778,7 +804,13 @@ class HomeTab extends StatelessWidget {
     );
   }
 
-  Widget _buildMarketRow(String emoji, String crop, String price, String change, bool isUp) {
+  Widget _buildMarketRow(
+    String emoji,
+    String crop,
+    String price,
+    String change,
+    bool isUp,
+  ) {
     return Row(
       children: [
         Text(emoji, style: const TextStyle(fontSize: 20)),
@@ -805,7 +837,7 @@ class HomeTab extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
           decoration: BoxDecoration(
-            color: isUp 
+            color: isUp
                 ? Colors.green.withOpacity(0.3)
                 : Colors.red.withOpacity(0.3),
             borderRadius: BorderRadius.circular(4),
@@ -846,23 +878,29 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     // Add initial greeting
-    _messages.add(ChatMessage(
-      text: "Namaste! I'm Sahayak, your farming assistant. How can I help you today?",
-      isFromUser: false,
-      timestamp: DateTime.now(),
-      suggestions: ["Check my crops", "Market prices", "Weather update", "Government schemes"],
-    ));
+    _messages.add(
+      ChatMessage(
+        text:
+            "Namaste! I'm Sahayak, your farming assistant. How can I help you today?",
+        isFromUser: false,
+        timestamp: DateTime.now(),
+        suggestions: [
+          "Check my crops",
+          "Market prices",
+          "Weather update",
+          "Government schemes",
+        ],
+      ),
+    );
   }
 
   Future<void> _sendMessage(String text) async {
     if (text.trim().isEmpty) return;
 
     setState(() {
-      _messages.add(ChatMessage(
-        text: text,
-        isFromUser: true,
-        timestamp: DateTime.now(),
-      ));
+      _messages.add(
+        ChatMessage(text: text, isFromUser: true, timestamp: DateTime.now()),
+      );
       _isLoading = true;
     });
 
@@ -870,25 +908,30 @@ class _ChatScreenState extends State<ChatScreen> {
 
     try {
       final response = await ApiService.sendMessage(text, _farmerId);
-      
+
       setState(() {
-        _messages.add(ChatMessage(
-          text: response['response'] ?? 'I received your message.',
-          isFromUser: false,
-          timestamp: DateTime.now(),
-          suggestions: response['suggestions']?.cast<String>(),
-          intent: response['intent'],
-          agent: response['agent'],
-        ));
+        _messages.add(
+          ChatMessage(
+            text: response['response'] ?? 'I received your message.',
+            isFromUser: false,
+            timestamp: DateTime.now(),
+            suggestions: response['suggestions']?.cast<String>(),
+            intent: response['intent'],
+            agent: response['agent'],
+          ),
+        );
         _isLoading = false;
       });
     } catch (e) {
       setState(() {
-        _messages.add(ChatMessage(
-          text: 'Sorry, I am having technical difficulties. Please try again.',
-          isFromUser: false,
-          timestamp: DateTime.now(),
-        ));
+        _messages.add(
+          ChatMessage(
+            text:
+                'Sorry, I am having technical difficulties. Please try again.',
+            isFromUser: false,
+            timestamp: DateTime.now(),
+          ),
+        );
         _isLoading = false;
       });
     }
@@ -927,7 +970,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     isLoading: true,
                   );
                 }
-                
+
                 final message = _messages[index];
                 return ChatBubble(
                   text: message.text,
@@ -1029,10 +1072,14 @@ class ChatBubble extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Column(
-        crossAxisAlignment: isFromUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment: isFromUser
+            ? CrossAxisAlignment.end
+            : CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: isFromUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+            mainAxisAlignment: isFromUser
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
             children: [
               if (!isFromUser) ...[
                 Container(
@@ -1042,15 +1089,24 @@ class ChatBubble extends StatelessWidget {
                     color: Color(0xFF388E3C),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.agriculture, color: Colors.white, size: 16),
+                  child: const Icon(
+                    Icons.agriculture,
+                    color: Colors.white,
+                    size: 16,
+                  ),
                 ),
                 const SizedBox(width: 8),
               ],
               Flexible(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   decoration: BoxDecoration(
-                    color: isFromUser ? const Color(0xFF388E3C) : Colors.grey[200],
+                    color: isFromUser
+                        ? const Color(0xFF388E3C)
+                        : Colors.grey[200],
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: isLoading
@@ -1087,7 +1143,9 @@ class ChatBubble extends StatelessWidget {
               ],
             ],
           ),
-          if (suggestions != null && suggestions!.isNotEmpty && !isFromUser) ...[
+          if (suggestions != null &&
+              suggestions!.isNotEmpty &&
+              !isFromUser) ...[
             const SizedBox(height: 8),
             Padding(
               padding: const EdgeInsets.only(left: 40),
@@ -1098,7 +1156,10 @@ class ChatBubble extends StatelessWidget {
                   return GestureDetector(
                     onTap: () => onSuggestionTap?.call(suggestion),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
                         border: Border.all(color: const Color(0xFF388E3C)),
                         borderRadius: BorderRadius.circular(16),
