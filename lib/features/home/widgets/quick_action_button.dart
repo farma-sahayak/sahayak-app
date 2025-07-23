@@ -22,24 +22,29 @@ class QuickActionButton extends StatelessWidget {
           onTap: onTap,
           child: Container(
             height: 80,
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
                   _getIconData(action.iconData),
                   color: _hexToColor(action.foregroundColor),
-                  size: 24,
+                  size: 22,
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  action.title,
-                  style: TextStyle(
-                    color: _hexToColor(action.foregroundColor),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
+                const SizedBox(height: 6),
+                Flexible(
+                  child: Text(
+                    action.title,
+                    style: TextStyle(
+                      color: _hexToColor(action.foregroundColor),
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ],
             ),
