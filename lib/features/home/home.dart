@@ -15,3 +15,6 @@ export 'data/repositories/home_repository.dart';
 export 'presentation/widgets/crop_card.dart';
 export 'presentation/widgets/notification_card.dart';
 export 'presentation/widgets/quick_action_button.dart';
+
+// screens
+export 'presentation/screens/home_screen.dart';

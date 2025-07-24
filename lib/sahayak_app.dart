@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile/api_service.dart';
+import 'package:mobile/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:mobile/features/auth/presentation/bloc/auth_event.dart';
 import 'package:mobile/features/crops/presentation/bloc/crops_bloc.dart';
 import 'package:mobile/features/crops/crops.dart' as crops;
 import 'package:mobile/features/crops/data/repositories/crops_repository.dart';
 import 'package:mobile/features/home/home.dart';
 import 'package:mobile/features/market/market.dart';
-import 'package:mobile/main.dart';
 import 'package:mobile/core/theme/sahayak_theme.dart';
+import 'package:mobile/shared/widgets/auth_gate.dart';
 
 class SahayakApp extends StatelessWidget {
   const SahayakApp({super.key});
@@ -15,6 +18,10 @@ class SahayakApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (context) =>
+              AuthBloc(ApiService())..add(AuthStatusCheckEvent()),
+        ),
         BlocProvider(
           create: (context) =>
               MarketBloc(repository: MarketRepository())
@@ -33,7 +40,7 @@ class SahayakApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Sahayak AI',
         theme: getSahayakTheme(),
-        home: const MainTabScaffold(),
+        home: const AuthGate(),
         debugShowCheckedModeBanner: false,
       ),
     );

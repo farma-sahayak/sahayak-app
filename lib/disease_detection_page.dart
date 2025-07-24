@@ -4,7 +4,7 @@ import 'shared/widgets/app_header.dart';
 import 'shared/widgets/app_card.dart';
 
 class DiseaseDetectionPage extends StatelessWidget {
-  const DiseaseDetectionPage({Key? key}) : super(key: key);
+  const DiseaseDetectionPage({super.key});
 
   @override
   Widget build(BuildContext context) {

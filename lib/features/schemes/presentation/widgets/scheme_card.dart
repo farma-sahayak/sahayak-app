@@ -389,7 +389,7 @@ class _TagChip extends StatelessWidget {
         vertical: 2,
       ),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceVariant,
+        color: theme.colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(AppConstants.smallRadius),
         border: Border.all(color: theme.dividerColor),
       ),
