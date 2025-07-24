@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:mobile/shared/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthState extends Equatable {
   const AuthState();
@@ -35,17 +35,10 @@ class AuthOtpSentState extends AuthState {
 
 class AuthenticatedState extends AuthState {
   final User user;
-  final String token;
-  final String sessionId;
-  final bool isNewUser;
+  final bool isNewUser = true;
 
-  const AuthenticatedState({
-    required this.user,
-    required this.token,
-    required this.sessionId,
-    required this.isNewUser,
-  });
+  const AuthenticatedState({required this.user});
 
   @override
-  List<Object?> get props => [user, token, sessionId, isNewUser];
+  List<Object?> get props => [user];
 }

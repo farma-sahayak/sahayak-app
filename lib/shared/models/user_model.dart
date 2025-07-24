@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class User extends Equatable {
+class UserModel extends Equatable {
   final String userId;
   final String phoneNumber;
   final String firebaseUid;
@@ -9,7 +9,7 @@ class User extends Equatable {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  const User({
+  const UserModel({
     required this.userId,
     required this.phoneNumber,
     required this.firebaseUid,
@@ -19,8 +19,8 @@ class User extends Equatable {
     required this.updatedAt,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
       userId: json['user_id'] as String,
       phoneNumber: json['phone_number'] as String,
       firebaseUid: json['firebase_uid'] as String,
@@ -43,7 +43,7 @@ class User extends Equatable {
     };
   }
 
-  User copyWith({
+  UserModel copyWith({
     String? userId,
     String? phoneNumber,
     String? firebaseUid,
@@ -52,7 +52,7 @@ class User extends Equatable {
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
-    return User(
+    return UserModel(
       userId: userId ?? this.userId,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       firebaseUid: firebaseUid ?? this.firebaseUid,

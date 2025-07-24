@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "122853780352",
+    "firebase_url": "https://sahayak-ai-9519a-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "sahayak-ai-9519a",
+    "storage_bucket": "sahayak-ai-9519a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:122853780352:android:42f806bbb999417379af65",
+        "android_client_info": {
+          "package_name": "com.example.mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJPhS7WlYZpRzjy7ebqvXYTdHD0Kic7s4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

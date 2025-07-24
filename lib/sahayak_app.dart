@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile/api_service.dart';
+import 'package:mobile/core/di/di.dart';
+import 'package:mobile/domain/commands/auth_cmd.dart';
 import 'package:mobile/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:mobile/features/auth/presentation/bloc/auth_event.dart';
 import 'package:mobile/features/crops/presentation/bloc/crops_bloc.dart';
 import 'package:mobile/features/crops/crops.dart' as crops;
 import 'package:mobile/features/crops/data/repositories/crops_repository.dart';
@@ -18,10 +18,7 @@ class SahayakApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) =>
-              AuthBloc(ApiService())..add(AuthStatusCheckEvent()),
-        ),
+        BlocProvider(create: (context) => AuthBloc(sl<AuthCmd>())),
         BlocProvider(
           create: (context) =>
               MarketBloc(repository: MarketRepository())

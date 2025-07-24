@@ -84,7 +84,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
             // Clear timers
             _timer?.cancel();
 
-            if (state.isNewUser || !state.user.profileCompleted) {
+            if (state.isNewUser) {
               // Navigate to farmer profile creation
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
