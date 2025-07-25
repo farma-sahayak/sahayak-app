@@ -1,4 +1,7 @@
 PODS:
+  - CwlCatchException (2.2.1):
+    - CwlCatchExceptionSupport (~> 2.2.1)
+  - CwlCatchExceptionSupport (2.2.1)
   - Flutter (1.0.0)
   - image_picker_ios (0.0.1):
     - Flutter
@@ -7,21 +10,22 @@ PODS:
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - speech_to_text (0.0.1):
+  - speech_to_text (7.2.0):
+    - CwlCatchException
     - Flutter
-    - Try
-  - Try (2.1.1)
+    - FlutterMacOS
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
-  - speech_to_text (from `.symlinks/plugins/speech_to_text/ios`)
+  - speech_to_text (from `.symlinks/plugins/speech_to_text/darwin`)
 
 SPEC REPOS:
   trunk:
-    - Try
+    - CwlCatchException
+    - CwlCatchExceptionSupport
 
 EXTERNAL SOURCES:
   Flutter:
@@ -33,16 +37,17 @@ EXTERNAL SOURCES:
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   speech_to_text:
-    :path: ".symlinks/plugins/speech_to_text/ios"
+    :path: ".symlinks/plugins/speech_to_text/darwin"
 
 SPEC CHECKSUMS:
+  CwlCatchException: 7acc161b299a6de7f0a46a6ed741eae2c8b4d75a
+  CwlCatchExceptionSupport: 54ccab8d8c78907b57f99717fb19d4cc3bce02dc
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   image_picker_ios: 7fe1ff8e34c1790d6fff70a32484959f563a928a
   permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
   shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
-  speech_to_text: ae2abc312e619ff1c53e675a9fc4d785a15c03bb
-  Try: 5ef669ae832617b3cee58cb2c6f99fb767a4ff96
+  speech_to_text: 3b313d98516d3d0406cea424782ec25470c59d19
 
-PODFILE CHECKSUM: 4305caec6b40dde0ae97be1573c53de1882a07e5
+PODFILE CHECKSUM: 251cb053df7158f337c0712f2ab29f4e0fa474ce
 
 COCOAPODS: 1.16.2

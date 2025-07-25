@@ -1,17 +1,20 @@
 // Models
-export 'models/crop.dart';
-export 'models/notification_item.dart';
-export 'models/quick_action.dart';
+export 'data/models/crop.dart';
+export 'data/models/notification_item.dart';
+export 'data/models/quick_action.dart';
 
 // BLoC
-export 'bloc/home_bloc.dart';
-export 'bloc/home_event.dart';
-export 'bloc/home_state.dart';
+export 'presentation/bloc/home_bloc.dart';
+export 'presentation/bloc/home_event.dart';
+export 'presentation/bloc/home_state.dart';
 
 // Repository
-export 'repository/home_repository.dart';
+export 'data/repositories/home_repository.dart';
 
 // Widgets
-export 'widgets/crop_card.dart';
-export 'widgets/notification_card.dart';
-export 'widgets/quick_action_button.dart';
+export 'presentation/widgets/crop_card.dart';
+export 'presentation/widgets/notification_card.dart';
+export 'presentation/widgets/quick_action_button.dart';
+
+// screens
+export 'presentation/screens/home_screen.dart';

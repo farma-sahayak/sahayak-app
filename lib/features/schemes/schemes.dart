@@ -1,11 +1,11 @@
 // Schemes Feature Barrel File
-export 'bloc/schemes_bloc.dart';
-export 'bloc/schemes_event.dart';
-export 'bloc/schemes_state.dart';
-export 'models/scheme.dart';
-export 'models/benefits_overview.dart';
-export 'repository/schemes_repository.dart';
-export 'pages/schemes_page.dart';
-export 'widgets/benefits_overview_card.dart';
-export 'widgets/scheme_card.dart';
-export 'widgets/help_documents_section.dart';
+export 'presentation/bloc/schemes_bloc.dart';
+export 'presentation/bloc/schemes_event.dart';
+export 'presentation/bloc/schemes_state.dart';
+export 'data/models/scheme.dart';
+export 'data/models/benefits_overview.dart';
+export 'data/repositories/schemes_repository.dart';
+export 'presentation/pages/schemes_page.dart';
+export 'presentation/widgets/benefits_overview_card.dart';
+export 'presentation/widgets/scheme_card.dart';
+export 'presentation/widgets/help_documents_section.dart';

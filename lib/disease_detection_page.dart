@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'shared/constants/app_constants.dart';
+import 'core/constants/app_constants.dart';
 import 'shared/widgets/app_header.dart';
 import 'shared/widgets/app_card.dart';
 
 class DiseaseDetectionPage extends StatelessWidget {
-  const DiseaseDetectionPage({Key? key}) : super(key: key);
+  const DiseaseDetectionPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class DiseaseDetectionPage extends StatelessWidget {
                       padding: const EdgeInsets.all(AppConstants.largePadding),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: const Color(0xFF388E3C).withOpacity(0.3),
+                          color: const Color(0xFF388E3C).withValues(alpha: 0.3),
                           style: BorderStyle.solid,
                           width: 2,
                         ),

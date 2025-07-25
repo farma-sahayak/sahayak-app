@@ -24,6 +24,3 @@ This project is a starting point for a Flutter application targeting farmers and
 ## Development Status
 
 The app is under active development with regular feature enhancements and UI improvements.
-
-
-SCREENS:
