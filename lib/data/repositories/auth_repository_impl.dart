@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mobile/data/source/remote/firebase_auth_datasource.dart';
+import 'package:mobile/data/source/remote/auth_sahayak_datasource.dart';
 import 'package:mobile/domain/repositories/auth_repository.dart';
+import 'package:mobile/shared/models/user_model.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final FirebaseAuthDatasource firebaseAuthDatasource;

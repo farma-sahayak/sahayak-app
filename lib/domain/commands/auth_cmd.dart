@@ -1,5 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobile/domain/repositories/auth_repository.dart';
+import 'package:mobile/shared/models/user_model.dart';
 
 class AuthCmd {
   final AuthRepository authReppository;

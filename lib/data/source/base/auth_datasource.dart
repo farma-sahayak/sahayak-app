@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mobile/shared/models/user_model.dart';
 
 abstract class AuthDatasource {
   Future<User?> signInWithPhone(String phoneNumber);
