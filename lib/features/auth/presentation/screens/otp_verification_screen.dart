@@ -83,21 +83,10 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
             // Clear timers
             _timer?.cancel();
 
-            if (state.isNewUser) {
-              // Navigate to farmer profile creation
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const FarmerProfileScreen(),
-                ),
-              );
-            } else {
-              // Navigate to home screen
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const MainTabScaffold(),
-                ),
-              );
-            }
+            // Navigate to home screen
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const MainTabScaffold()),
+            );
           } else if (state is AuthErrorState) {
             // Show error message
             ScaffoldMessenger.of(context).showSnackBar(
@@ -111,7 +100,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
             // OTP resent successfully
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: const Text('OTP पुनः भेजा गया'),
+                content: const Text('OTP is sent successfully!'),
                 backgroundColor: Colors.green,
                 behavior: SnackBarBehavior.floating,
               ),
@@ -157,7 +146,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        '${widget.phoneNumber} पर भेजा गया OTP दर्ज करें',
+                        'Enter the OTP sent to ${widget.phoneNumber}',
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.grey,
@@ -253,7 +242,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                           ),
                         )
                       : const Text(
-                          'सत्यापित करें',
+                          'Submit',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -268,7 +257,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                   child: Column(
                     children: [
                       const Text(
-                        'OTP प्राप्त नहीं हुआ?',
+                        'Didn\'t receive the OTP?',
                         style: TextStyle(fontSize: 16, color: Colors.grey),
                       ),
                       const SizedBox(height: 8),
@@ -276,7 +265,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                         TextButton(
                           onPressed: _resendOTP,
                           child: Text(
-                            'पुनः भेजें',
+                            'Send Again',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -286,7 +275,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                         )
                       else
                         Text(
-                          'पुनः भेजें ($_resendTimer सेकंड में)',
+                          'Send again in $_resendTimer seconds',
                           style: const TextStyle(
                             fontSize: 16,
                             color: Colors.grey,
@@ -316,7 +305,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                       const SizedBox(width: 12),
                       const Expanded(
                         child: Text(
-                          'समस्या आ रही है? कृपया अपना नेटवर्क कनेक्शन जांचें',
+                          'Kindly check your network connection and ensure that the phone number is correct. If you still face issues, please contact support.',
                           style: TextStyle(fontSize: 14, color: Colors.black87),
                         ),
                       ),

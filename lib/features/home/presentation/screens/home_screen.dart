@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile/core/constants/app_constants.dart';
 import 'package:mobile/disease_detection_page.dart';
+import 'package:mobile/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:mobile/features/auth/presentation/bloc/auth_event.dart';
+import 'package:mobile/features/auth/presentation/screens/phone_input_screen.dart';
 import 'package:mobile/features/home/data/models/quick_action.dart';
 import 'package:mobile/features/home/presentation/bloc/home_bloc.dart';
 import 'package:mobile/features/home/presentation/bloc/home_event.dart';
@@ -19,15 +22,6 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Sahayak"),
-        leading: Builder(
-          builder: (context) => IconButton(
-            onPressed: () => Scaffold.of(context).openDrawer(),
-            icon: Icon(Icons.menu),
-          ),
-        ),
-      ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -50,7 +44,16 @@ class HomeTab extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.logout),
               title: Text("Logout"),
-              onTap: () => {},
+              onTap: () => {
+                // trigger logout event, upon successful logout, navigate to phone input screen
+                context.read<AuthBloc>().add(AuthLogoutEvent()),
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PhoneInputScreen(),
+                  ),
+                ),
+              },
             ),
           ],
         ),
@@ -70,6 +73,13 @@ class HomeTab extends StatelessWidget {
                   // App bar row
                   Row(
                     children: [
+                      // drawer button
+                      IconButton(
+                        icon: const Icon(Icons.menu, color: Colors.black),
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                        },
+                      ),
                       Spacer(),
                       IconButton(
                         icon: Stack(
@@ -109,7 +119,7 @@ class HomeTab extends StatelessWidget {
                   ),
                   // const SizedBox(height: AppConstants.smallPadding),
                   Text(
-                    'Good morning, user! • 12:29 am',
+                    'Good morning! • ${DateTime.now().day}/${DateTime.now().month}',
                     style: Theme.of(
                       context,
                     ).textTheme.bodyMedium?.copyWith(color: Colors.black),

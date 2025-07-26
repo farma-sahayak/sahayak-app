@@ -106,7 +106,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
 
       final response = await _apiClient.post(
         '/auth/logout',
-        data: {'refresh': refreshToken},
+        data: {'refresh_token': refreshToken},
         options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
       );
 
