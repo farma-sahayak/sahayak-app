@@ -1,10 +1,8 @@
-import 'package:mobile/shared/models/user_model.dart';
+import 'package:mobile/domain/models/auth_response.dart';
 
 abstract class AuthDatasource {
-  Future<User?> signInWithPhone(String phoneNumber);
-  Future<User?> verifyOTP(String otpCode);
-  Future<void> signout();
-  Stream<User?> get onAuthStateChanged;
-  Future<User?> getCurrentUser();
-  Future<void> clearAuthToken();
+  Future<void> saveTokens(AuthResponse authToken);
+  Future<String?> getAccessToken();
+  Future<String?> getRefreshToken();
+  Future<void> clearTokens();
 }

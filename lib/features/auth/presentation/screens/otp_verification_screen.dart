@@ -4,10 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile/core/constants/app_constants.dart';
 import 'package:mobile/features/auth/presentation/bloc/auth_bloc.dart';
 import 'dart:async';
-
 import 'package:mobile/features/auth/presentation/bloc/auth_event.dart';
 import 'package:mobile/features/auth/presentation/bloc/auth_state.dart';
-import 'package:mobile/features/home/presentation/screens/home_screen.dart';
+import 'package:mobile/main_tab_scaffold.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
   final String phoneNumber;
@@ -94,7 +93,9 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
             } else {
               // Navigate to home screen
               Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const HomeTab()),
+                MaterialPageRoute(
+                  builder: (context) => const MainTabScaffold(),
+                ),
               );
             }
           } else if (state is AuthErrorState) {
@@ -134,7 +135,9 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                         width: 80,
                         height: 80,
                         decoration: BoxDecoration(
-                          color: AppConstants.primaryGreen.withOpacity(0.1),
+                          color: AppConstants.primaryGreen.withValues(
+                            alpha: 0.1,
+                          ),
                           borderRadius: BorderRadius.circular(40),
                         ),
                         child: Icon(

@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:mobile/shared/models/user_model.dart';
 
 abstract class AuthState extends Equatable {
   const AuthState();
@@ -25,20 +24,18 @@ class AuthErrorState extends AuthState {
 
 class AuthOtpSentState extends AuthState {
   final String phoneNumber;
-  final String message;
 
-  const AuthOtpSentState({required this.phoneNumber, required this.message});
+  const AuthOtpSentState(this.phoneNumber);
 
   @override
-  List<Object?> get props => [phoneNumber, message];
+  List<Object?> get props => [phoneNumber];
 }
 
 class AuthenticatedState extends AuthState {
-  final User user;
-  final bool isNewUser = true;
+  final bool isNewUser = false;
 
-  const AuthenticatedState({required this.user});
+  const AuthenticatedState();
 
   @override
-  List<Object?> get props => [user];
+  List<Object?> get props => [isNewUser];
 }

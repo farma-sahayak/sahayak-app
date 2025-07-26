@@ -92,7 +92,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                         ),
                         const SizedBox(height: 8),
                         const Text(
-                          'आपका खेती का साथी',
+                          "Your Farm's Sahayak",
                           style: TextStyle(fontSize: 18, color: Colors.grey),
                         ),
                       ],
@@ -103,7 +103,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
 
                   // Welcome text
                   const Text(
-                    'स्वागत है!',
+                    'Welcome!',
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -115,7 +115,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                   const SizedBox(height: 8),
 
                   const Text(
-                    'आरंभ करने के लिए अपना मोबाइल नंबर दर्ज करें',
+                    'Enter your Mobile Number',
                     style: TextStyle(fontSize: 16, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
@@ -160,7 +160,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                               fontWeight: FontWeight.w500,
                             ),
                             decoration: const InputDecoration(
-                              hintText: 'मोबाइल नंबर दर्ज करें',
+                              hintText: 'Register Mobile Number',
                               hintStyle: TextStyle(
                                 fontSize: 16,
                                 color: Colors.grey,
@@ -173,13 +173,13 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'मोबाइल नंबर आवश्यक है';
+                                return 'Mobile Number is required';
                               }
                               if (value.length != 10) {
-                                return 'मोबाइल नंबर 10 अंक का होना चाहिए';
+                                return 'Mobile number must be of 10 digit';
                               }
                               if (!RegExp(r'^[6-9][0-9]{9}$').hasMatch(value)) {
-                                return 'कृपया वैध मोबाइल नंबर दर्ज करें';
+                                return 'Invalid Mobile Number';
                               }
                               return null;
                             },
@@ -252,7 +252,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                         const SizedBox(width: 12),
                         const Expanded(
                           child: Text(
-                            'सहायक हिंदी, अंग्रेजी और अन्य भाषाओं में उपलब्ध है',
+                            'Sahayak is available in English, Hindi, and other regional languages.',
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.black87,
@@ -273,7 +273,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
 
   void _sendOTP() {
     if (_formKey.currentState!.validate()) {
-      final phoneNumber = '+91${_phoneController.text}';
+      final phoneNumber = '+91-${_phoneController.text}';
 
       // Send OTP using BLoC
       context.read<AuthBloc>().add(AuthSendOTPEvent(phoneNumber));

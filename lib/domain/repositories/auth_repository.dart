@@ -1,12 +1,9 @@
-import 'package:mobile/shared/models/user_model.dart';
+import 'package:mobile/domain/models/auth_request.dart';
+import 'package:mobile/shared/common/result.dart';
 
 abstract class AuthRepository {
-  Future<User?> signInWithPhone(String phoneNumber);
-  Future<User?> verifyOTP(String otpCode);
-  Future<void> signout();
-  Stream<User?> get onAuthStateChanged;
-  Future<User?> getCurrentUser();
-  Future<void> clearAuthToken();
-
-  bool isAuthError(Exception e);
+  Future<Result> signup({AuthRequest? authRequest});
+  Future<Result> login({AuthRequest? authRequest});
+  Future<Result> logout();
+  Future<Result<bool>> isAuthenticated();
 }

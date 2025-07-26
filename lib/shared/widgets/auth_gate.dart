@@ -34,11 +34,7 @@ class _AuthGateState extends State<AuthGate> {
           return const MainTabScaffold();
         }
 
-        if (state is AuthUnauthenticatedState) {
-          return const PhoneInputScreen();
-        }
-
-        return const Scaffold(body: Center(child: Text("Unknown auth state")));
+        return const PhoneInputScreen();
       },
     );
   }

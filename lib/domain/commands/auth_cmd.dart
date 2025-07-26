@@ -1,28 +1,29 @@
+import 'package:mobile/domain/models/auth_request.dart';
 import 'package:mobile/domain/repositories/auth_repository.dart';
-import 'package:mobile/shared/models/user_model.dart';
+import 'package:mobile/shared/common/result.dart';
 
 class AuthCmd {
   final AuthRepository authReppository;
 
   const AuthCmd(this.authReppository);
 
-  Future<User?> getCurrentUser() async {
-    return authReppository.getCurrentUser();
+  Future<Result<bool>> isAuthenticated() {
+    return authReppository.isAuthenticated();
   }
 
-  Future<void> clearAuthToken() async {
-    return authReppository.clearAuthToken();
+  Future<Result<bool>> signup(AuthRequest authRequest) async {
+    final result = await authReppository.signup(authRequest: authRequest);
+    if (result.isFailure) {
+      return Result.failure(result.error!);
+    }
+    return Result.success(true);
   }
 
-  Future<User?> signInWithPhoneNumber(String phoneNumber) async {
-    return authReppository.signInWithPhone(phoneNumber);
-  }
-
-  Future<User?> verifyOTP(String otpCode) async {
-    return authReppository.verifyOTP(otpCode);
-  }
-
-  Future<bool> isAuthError(Exception e) async {
-    return authReppository.isAuthError(e);
+  Future<Result<bool>> logout() async {
+    final result = await authReppository.logout();
+    if (result.isFailure) {
+      return Result.failure(result.error!);
+    }
+    return const Result.success(true);
   }
 }

@@ -18,423 +18,452 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        return RefreshIndicator(
-          onRefresh: () async {
-            context.read<HomeBloc>().add(const RefreshHomeData());
-          },
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            padding: const EdgeInsets.all(AppConstants.screenPadding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // App bar row
-                Row(
-                  children: [
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: const Color(0xFF388E3C),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        elevation: 0,
-                        side: const BorderSide(color: Color(0xFFB2DFDB)),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 4,
-                        ),
-                      ),
-                      icon: const Icon(Icons.download),
-                      label: const Text('Install App'),
-                      onPressed: () {},
-                    ),
-                    const Spacer(),
-                    IconButton(
-                      icon: Stack(
-                        children: [
-                          const Icon(
-                            Icons.notifications_none,
-                            color: Colors.black,
-                          ),
-                          Positioned(
-                            right: 0,
-                            child: Container(
-                              padding: const EdgeInsets.all(2),
-                              decoration: const BoxDecoration(
-                                color: Colors.red,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Text(
-                                state is HomeLoaded
-                                    ? '${state.notifications.where((n) => !n.isRead).length}'
-                                    : '3',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.language, color: Colors.black),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppConstants.smallPadding),
-                Text(
-                  'Good morning, user! • 12:29 am',
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium?.copyWith(color: Colors.black54),
-                ),
-                const SizedBox(height: AppConstants.screenPadding),
-                // Ask Sahayak Anything
-                AppCard(
-                  color: const Color(0xFFE8F5E9),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Container(
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFB2DFDB),
-                        shape: BoxShape.circle,
-                      ),
-                      padding: const EdgeInsets.all(AppConstants.smallPadding),
-                      child: const Icon(
-                        Icons.mic,
-                        color: Color(0xFF388E3C),
-                        size: AppConstants.iconMedium,
-                      ),
-                    ),
-                    title: Text(
-                      'Ask Sahayak Anything',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'Tap the mic to speak in Kannada or English',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ChatScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(height: AppConstants.screenPadding),
-                // Search bar
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(32),
-                    border: Border.all(color: Colors.black12),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Search crops, diseases, schemes…',
-                      icon: Icon(Icons.search),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                // Weather card
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(20.0),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF43A047), Color(0xFF66BB6A)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF43A047).withValues(alpha: 0.3),
-                        blurRadius: 12,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: Row(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Sahayak"),
+        leading: Builder(
+          builder: (context) => IconButton(
+            onPressed: () => Scaffold.of(context).openDrawer(),
+            icon: Icon(Icons.menu),
+          ),
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            UserAccountsDrawerHeader(
+              accountName: Text("Hari Singh"),
+              accountEmail: Text("harisingh@gmail.com"),
+              decoration: BoxDecoration(color: Color(0xFF388E3C)),
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text("Details"),
+              onTap: () => {},
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text("Settings"),
+              onTap: () => {},
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text("Logout"),
+              onTap: () => {},
+            ),
+          ],
+        ),
+      ),
+      body: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          return RefreshIndicator(
+            onRefresh: () async {
+              context.read<HomeBloc>().add(const RefreshHomeData());
+            },
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(AppConstants.screenPadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // App bar row
+                  Row(
                     children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              "Today's Weather",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
-                              ),
+                      Spacer(),
+                      IconButton(
+                        icon: Stack(
+                          children: [
+                            const Icon(
+                              Icons.notifications_none,
+                              color: Colors.black,
                             ),
-                            SizedBox(height: 8),
-                            Text(
-                              '28°C',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 32,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Text(
-                              'Partly Cloudy • Humidity 65%',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 12,
+                            Positioned(
+                              right: 0,
+                              child: Container(
+                                padding: const EdgeInsets.all(2),
+                                decoration: const BoxDecoration(
+                                  color: Colors.red,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Text(
+                                  state is HomeLoaded
+                                      ? '${state.notifications.where((n) => !n.isRead).length}'
+                                      : '3',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                  ),
+                                ),
                               ),
                             ),
                           ],
                         ),
+                        onPressed: () {},
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(12),
+                      IconButton(
+                        icon: const Icon(Icons.language, color: Colors.black),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                  // const SizedBox(height: AppConstants.smallPadding),
+                  Text(
+                    'Good morning, user! • 12:29 am',
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                  const SizedBox(height: AppConstants.screenPadding),
+                  // Ask Sahayak Anything
+                  AppCard(
+                    color: const Color(0xFFE8F5E9),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: Container(
+                        decoration: const BoxDecoration(
+                          color: Color(0xFFB2DFDB),
+                          shape: BoxShape.circle,
+                        ),
+                        padding: const EdgeInsets.all(
+                          AppConstants.smallPadding,
                         ),
                         child: const Icon(
-                          Icons.wb_sunny,
-                          color: Colors.white,
-                          size: 32,
+                          Icons.mic,
+                          color: Color(0xFF388E3C),
+                          size: AppConstants.iconMedium,
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                // Market Snapshot card
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(20.0),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFFFA726), Color(0xFFFFB74D)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFFFFA726).withValues(alpha: 0.3),
-                        blurRadius: 12,
-                        offset: const Offset(0, 4),
+                      title: Text(
+                        'Ask Sahayak Anything',
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
-                    ],
+                      subtitle: Text(
+                        'Tap the mic to speak in Kannada or English',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ChatScreen(),
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.trending_up,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                          const SizedBox(width: 8),
-                          const Text(
-                            'Market Snapshot',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                            ),
-                          ),
-                          const Spacer(),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.2),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: const Text(
-                              'Live',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
-                                fontWeight: FontWeight.w600,
+                  const SizedBox(height: AppConstants.screenPadding),
+                  // Search bar
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(32),
+                      border: Border.all(color: Colors.black12),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: const TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Search crops, diseases, schemes…',
+                        icon: Icon(Icons.search),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  // Weather card
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(20.0),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF43A047), Color(0xFF66BB6A)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF43A047).withValues(alpha: 0.3),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text(
+                                "Today's Weather",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                ),
                               ),
-                            ),
+                              SizedBox(height: 8),
+                              Text(
+                                '28°C',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              Text(
+                                'Partly Cloudy • Humidity 65%',
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      _buildMarketRow('🍅', 'Tomato', '₹25/kg', '+8%', true),
-                      const SizedBox(height: 8),
-                      _buildMarketRow('🍆', 'Brinjal', '₹18/kg', '-5%', false),
-                      const SizedBox(height: 8),
-                      _buildMarketRow('🌶️', 'Chili', '₹45/kg', '+12%', true),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                // Sahayak Says card
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(20.0),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFE8F5E9),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: const Color(0xFF388E3C).withValues(alpha: 0.2),
-                      width: 1,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Icon(
+                            Icons.wb_sunny,
+                            color: Colors.white,
+                            size: 32,
+                          ),
+                        ),
+                      ],
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF388E3C).withValues(alpha: 0.1),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: const Color(
-                                0xFF388E3C,
-                              ).withValues(alpha: 0.1),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: const Icon(
-                              Icons.smart_toy,
-                              color: Color(0xFF388E3C),
+                  const SizedBox(height: 16),
+                  // Market Snapshot card
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(20.0),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFFFFA726), Color(0xFFFFB74D)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFFFFA726).withValues(alpha: 0.3),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.trending_up,
+                              color: Colors.white,
                               size: 20,
                             ),
-                          ),
-                          const SizedBox(width: 12),
-                          const Text(
-                            'Sahayak Says:',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFF388E3C),
-                              fontSize: 16,
-                            ),
-                          ),
-                          const Spacer(),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: const Color(
-                                0xFF388E3C,
-                              ).withValues(alpha: 0.1),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: const Text(
-                              'AI Tip',
+                            const SizedBox(width: 8),
+                            const Text(
+                              'Market Snapshot',
                               style: TextStyle(
-                                color: Color(0xFF388E3C),
-                                fontSize: 10,
+                                color: Colors.white,
                                 fontWeight: FontWeight.w600,
+                                fontSize: 16,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      const Text(
-                        'Your brinjal crop is looking excellent! Consider harvesting in 2-3 days when prices are expected to rise. The weather is perfect for the next few days.',
-                        style: TextStyle(
-                          fontSize: 14,
-                          height: 1.4,
-                          color: Colors.black87,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
+                            const Spacer(),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
                               decoration: BoxDecoration(
-                                color: const Color(0xFF388E3C),
+                                color: Colors.white.withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.volume_up,
-                                    color: Colors.white,
-                                    size: 16,
-                                  ),
-                                  SizedBox(width: 6),
-                                  Text(
-                                    'Listen to tip',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
+                              child: const Text(
+                                'Live',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(width: 12),
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: const Color(0xFF388E3C),
-                                width: 1,
-                              ),
-                            ),
-                            child: const Icon(
-                              Icons.share,
-                              color: Color(0xFF388E3C),
-                              size: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        _buildMarketRow('🍅', 'Tomato', '₹25/kg', '+8%', true),
+                        const SizedBox(height: 8),
+                        _buildMarketRow(
+                          '🍆',
+                          'Brinjal',
+                          '₹18/kg',
+                          '-5%',
+                          false,
+                        ),
+                        const SizedBox(height: 8),
+                        _buildMarketRow('🌶️', 'Chili', '₹45/kg', '+12%', true),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                // My Crops Section
-                _buildMyCropsSection(context, state),
-                const SizedBox(height: 20),
-                // Alerts & Updates Section
-                _buildAlertsSection(context, state),
-                const SizedBox(height: 20),
-                // Quick Actions Section
-                _buildQuickActionsSection(context),
-                const SizedBox(height: 20),
-              ],
+                  const SizedBox(height: 16),
+                  // Sahayak Says card
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(20.0),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE8F5E9),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: const Color(0xFF388E3C).withValues(alpha: 0.2),
+                        width: 1,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF388E3C).withValues(alpha: 0.1),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: const Color(
+                                  0xFF388E3C,
+                                ).withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: const Icon(
+                                Icons.smart_toy,
+                                color: Color(0xFF388E3C),
+                                size: 20,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            const Text(
+                              'Sahayak Says:',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF388E3C),
+                                fontSize: 16,
+                              ),
+                            ),
+                            const Spacer(),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(
+                                  0xFF388E3C,
+                                ).withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: const Text(
+                                'AI Tip',
+                                style: TextStyle(
+                                  color: Color(0xFF388E3C),
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        const Text(
+                          'Your brinjal crop is looking excellent! Consider harvesting in 2-3 days when prices are expected to rise. The weather is perfect for the next few days.',
+                          style: TextStyle(
+                            fontSize: 14,
+                            height: 1.4,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 10,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF388E3C),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.volume_up,
+                                      color: Colors.white,
+                                      size: 16,
+                                    ),
+                                    SizedBox(width: 6),
+                                    Text(
+                                      'Listen to tip',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: const Color(0xFF388E3C),
+                                  width: 1,
+                                ),
+                              ),
+                              child: const Icon(
+                                Icons.share,
+                                color: Color(0xFF388E3C),
+                                size: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  // My Crops Section
+                  _buildMyCropsSection(context, state),
+                  const SizedBox(height: 20),
+                  // Alerts & Updates Section
+                  _buildAlertsSection(context, state),
+                  const SizedBox(height: 20),
+                  // Quick Actions Section
+                  _buildQuickActionsSection(context),
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
