@@ -98,45 +98,46 @@ class BenefitsOverviewCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppConstants.mediumPadding),
-                Row(
+                Column(
                   children: [
-                    Expanded(
-                      child: _StatusBox(
-                        label: 'Eligible',
-                        count: benefitsOverview.eligible,
-                        color: greenLight,
-                        textColor: primaryColor,
-                        icon: Icons.check_circle,
-                      ),
+                    // First row - 2 cards
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _StatusBox(
+                            label: 'Eligible',
+                            count: benefitsOverview.eligible,
+                            color: greenLight,
+                            textColor: primaryColor,
+                            icon: Icons.check_circle,
+                          ),
+                        ),
+                        const SizedBox(width: AppConstants.smallPadding),
+                        Expanded(
+                          child: _StatusBox(
+                            label: 'Applied',
+                            count: benefitsOverview.applied,
+                            color: blueLight,
+                            textColor: infoColor,
+                            icon: Icons.hourglass_empty,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: AppConstants.smallPadding),
-                    Expanded(
-                      child: _StatusBox(
-                        label: 'Applied',
-                        count: benefitsOverview.applied,
-                        color: blueLight,
-                        textColor: infoColor,
-                        icon: Icons.hourglass_empty,
-                      ),
-                    ),
-                    const SizedBox(width: AppConstants.smallPadding),
-                    Expanded(
-                      child: _StatusBox(
-                        label: 'Not Eligible',
-                        count: benefitsOverview.notEligible,
-                        color: redLight,
-                        textColor: errorColor,
-                        icon: Icons.cancel,
-                      ),
-                    ),
-                  ],
-                ),
-                if (benefitsOverview.approved > 0 ||
-                    benefitsOverview.rejected > 0) ...[
-                  const SizedBox(height: AppConstants.smallPadding),
-                  Row(
-                    children: [
-                      if (benefitsOverview.approved > 0) ...[
+                    const SizedBox(height: AppConstants.smallPadding),
+                    // Second row - 2 cards
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _StatusBox(
+                            label: 'Not Eligible',
+                            count: benefitsOverview.notEligible,
+                            color: redLight,
+                            textColor: errorColor,
+                            icon: Icons.cancel,
+                          ),
+                        ),
+                        const SizedBox(width: AppConstants.smallPadding),
                         Expanded(
                           child: _StatusBox(
                             label: 'Approved',
@@ -146,27 +147,11 @@ class BenefitsOverviewCard extends StatelessWidget {
                             icon: Icons.verified,
                           ),
                         ),
-                        const SizedBox(width: AppConstants.smallPadding),
                       ],
-                      if (benefitsOverview.rejected > 0) ...[
-                        Expanded(
-                          child: _StatusBox(
-                            label: 'Rejected',
-                            count: benefitsOverview.rejected,
-                            color: redLight,
-                            textColor: errorColor,
-                            icon: Icons.error,
-                          ),
-                        ),
-                        const SizedBox(width: AppConstants.smallPadding),
-                      ],
-                      // Fill remaining space if only one status is shown
-                      if (benefitsOverview.approved == 0 ||
-                          benefitsOverview.rejected == 0)
-                        const Spacer(),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
+
               ],
             ),
           ),
