@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'data/models/disease_analysis_response.dart';
 
 class DiseaseDetectionService {
   static const String baseUrl = 'http://0.0.0.0:8050';
@@ -70,7 +71,12 @@ class DiseaseDetectionService {
       print(responseData);
 
       if (response.statusCode == 200) {
-        return responseData;
+        // Parse JSON response
+        final jsonResponse = json.decode(responseData);
+        final analysisResponse = DiseaseAnalysisResponse.fromJson(jsonResponse);
+        
+        // Return formatted analysis
+        return analysisResponse.formattedAnalysis;
       } else {
         throw Exception('API request failed with status: ${response.statusCode}, response: $responseData');
       }
